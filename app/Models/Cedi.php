@@ -9,11 +9,11 @@ class Cedi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nb_cedis", "nb_ubicacion"];
+    protected $fillable = ["nb_cedis", "nb_ubicacion","id_operacion", "isActive"];
 
-    /*public function Operacione(){
-        return $this->belongsTo(Operacione::class);
-    }*/
+    public function Cedis(){
+        return $this->belongsTo(Cedi::class);
+    }
 
     
 }

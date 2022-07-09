@@ -14,7 +14,9 @@ class CediController extends Controller
      */
     public function index()
     {
-        //
+        $cedis = Cedi::with("cedis")->paginate(10);
+
+        return view("cedis.index", compact("cedis"));
     }
 
     /**
@@ -24,7 +26,11 @@ class CediController extends Controller
      */
     public function create()
     {
-        //
+        $cedi = new Cedi;
+        $title = __("Crear cedi");
+        $textButton = __("Crear");
+        $route = route("cedis.store");
+        return view("cedis.create", compact("title","textButton", "route", "cedi"));
     }
 
     /**
@@ -35,19 +41,23 @@ class CediController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $this->validate($request, [
+
+            "nb_cedis" => "required|max:140|unique:cedis",
+            "nb_ubicacion" => "required|max:140",
+            "id_operacion" => "required",
+            "isActive" => "required",
+
+        ]);
+
+        Cedi::create($request->only("nb_cedis", "nb_ubicacion", "id_operacion", "isActive"));
+        return redirect(route("cedis.index"))
+            ->with("success", __("¡Centro de distribución guardado!"));
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cedi  $cedi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cedi $cedi)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -57,7 +67,11 @@ class CediController extends Controller
      */
     public function edit(Cedi $cedi)
     {
-        //
+        $update = true;
+        $title = __("Editar cedi");
+        $textButton = __("Actualizar");
+        $route = route("cedis.update", [ "cedi" => $cedi]);
+        return view("cedis.edit", compact("update","title","textButton", "route", "cedi"));
     }
 
     /**
@@ -69,7 +83,17 @@ class CediController extends Controller
      */
     public function update(Request $request, Cedi $cedi)
     {
-        //
+        $this->validate($request, [
+
+            "nb_cedis" => "required|max:140|unique:cedis,nb_cedis," . $cedi->id,
+            "nb_ubicacion" => "required|max:140",
+            "id_operacion" => "required",
+            "isActive" => "required",
+
+        ]);
+
+        $cedi->fill($request->only("nb_cedis","nb_ubicacion","id_operacion","isActive"))->save();
+        return  back()->with("success", __("¡Operación actualizado!"));
     }
 
     /**
