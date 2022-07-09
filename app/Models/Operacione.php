@@ -11,4 +11,10 @@ class Operacione extends Model
 
     protected $fillable = ["nb_operacion"];
 
+
+    public function operaciones()
+    {
+            return $this->belongsTo(Operacione::class, 'id');
+    }
+    
 }

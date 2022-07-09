@@ -34,7 +34,12 @@ class OperacioneController extends Controller
      */
     public function create()
     {
-        //
+        $operacione = new Operacione;
+        $title = __("Crear operación");
+        $textButton = __("Crear");
+        $route = route("operaciones.store");
+        return view("operaciones.create", compact("title","textButton", "route", "operacione"));
+
     }
 
     /**
@@ -45,19 +50,17 @@ class OperacioneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+
+            "nb_operacion" => "required|max:140|unique:operaciones",
+        ]);
+
+        Operacione::create($request->only("nb_operacion"));
+        return redirect(route("operaciones.index"))
+            ->with("success", __("¡Operación guardada!"));
+            
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Operacione  $operacione
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Operacione $operacione)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -67,7 +70,13 @@ class OperacioneController extends Controller
      */
     public function edit(Operacione $operacione)
     {
-        //
+
+        $update = true;
+        $title = __("Editar operación");
+        $textButton = __("Actualizar");
+        $route = route("operaciones.update", [ "operacione" => $operacione]);
+        return view("operaciones.edit", compact("update","title","textButton", "route", "operacione"));
+
     }
 
     /**
@@ -79,7 +88,16 @@ class OperacioneController extends Controller
      */
     public function update(Request $request, Operacione $operacione)
     {
-        //
+        $this->validate($request, [
+
+            "nb_operacion" => "required|max:140|unique:operaciones,nb_operacion," . $operacione->id,
+        ]);
+
+        $operacione->fill($request->only("nb_operacion"))->save();
+        return  back()->with("success", __("¡Operación actualizado!"));
+            
+    
+
     }
 
     /**
@@ -90,6 +108,7 @@ class OperacioneController extends Controller
      */
     public function destroy(Operacione $operacione)
     {
-        //
+        $operacione->delete();
+        return back()->with("success", __("¡Operación eliminada!"));
     }
 }
