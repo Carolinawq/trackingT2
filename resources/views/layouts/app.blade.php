@@ -32,8 +32,12 @@
                         <a href="{{ route("operaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
                             {{__("Operaciones")}}
                         </a>
+                        <a href="{{ route("cedis.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Cedis")}}
+                        </a>
                     </div>
                 </div>
+
             @endauth
             
 
