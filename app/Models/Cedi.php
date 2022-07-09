@@ -11,9 +11,9 @@ class Cedi extends Model
 
     protected $fillable = ["nb_cedis", "nb_ubicacion"];
 
-    public function Operacione(){
+    /*public function Operacione(){
         return $this->belongsTo(Operacione::class);
-    }
+    }*/
 
     
 }
