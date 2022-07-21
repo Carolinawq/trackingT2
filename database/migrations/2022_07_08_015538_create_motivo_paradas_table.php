@@ -16,7 +16,11 @@ class CreateMotivoParadasTable extends Migration
         Schema::create('motivo_paradas', function (Blueprint $table) {
             $table->id();
             $table->string('nb_motivo_parada');
-            $table->string('descripcion');
+            $table->boolean('isActive');
+
+            $table->unsignedBigInteger('id_parada');
+            $table->foreign("id_parada")->references("id")->on("paradas");
+
             $table->timestamps();
         });
     }

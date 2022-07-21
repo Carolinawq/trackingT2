@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cedi;
+use App\Models\Chofere;
+
 use Illuminate\Http\Request;
 
 class CediController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,10 @@ class CediController extends Controller
     {
         $cedis = Cedi::with("cedis")->paginate(10);
 
+
+
         return view("cedis.index", compact("cedis"));
-    }
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -45,13 +54,13 @@ class CediController extends Controller
         $this->validate($request, [
 
             "nb_cedis" => "required|max:140|unique:cedis",
-            "nb_ubicacion" => "required|max:140",
-            "id_operacion" => "required",
+            "pp" => "required",
+            "pv" => "required",
             "isActive" => "required",
 
         ]);
 
-        Cedi::create($request->only("nb_cedis", "nb_ubicacion", "id_operacion", "isActive"));
+        Cedi::create($request->only("nb_cedis","pp","pv", "isActive"));
         return redirect(route("cedis.index"))
             ->with("success", __("¡Centro de distribución guardado!"));
 
@@ -86,13 +95,13 @@ class CediController extends Controller
         $this->validate($request, [
 
             "nb_cedis" => "required|max:140|unique:cedis,nb_cedis," . $cedi->id,
-            "nb_ubicacion" => "required|max:140",
-            "id_operacion" => "required",
+            "pp" => "required",
+            "pv" => "required",
             "isActive" => "required",
 
         ]);
 
-        $cedi->fill($request->only("nb_cedis","nb_ubicacion","id_operacion","isActive"))->save();
+        $cedi->fill($request->only("nb_cedis","pv","pp","isActive"))->save();
         return  back()->with("success", __("¡Operación actualizado!"));
     }
 
@@ -104,6 +113,6 @@ class CediController extends Controller
      */
     public function destroy(Cedi $cedi)
     {
-        //
+        
     }
 }

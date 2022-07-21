@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperacionesTable extends Migration
+class CreateParadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateOperacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('operaciones', function (Blueprint $table) {
+        Schema::create('paradas', function (Blueprint $table) {
             $table->id();
-            $table->string('nb_operacion')->unique();
+            $table->string('nb_parada');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateOperacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operaciones');
+        Schema::dropIfExists('paradas');
     }
 }

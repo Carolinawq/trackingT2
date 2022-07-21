@@ -20,9 +20,6 @@ class CreateUnidadesTable extends Migration
             $table->unsignedBigInteger('id_estatus');
             $table->foreign("id_estatus")->references("id")->on("estatus_unidades");
 
-            $table->unsignedBigInteger('id_vuelta');
-            $table->foreign("id_vuelta")->references("id")->on("vueltas");
-
             $table->unsignedBigInteger('id_evento');
             $table->foreign("id_evento")->references("id")->on("eventos");
 

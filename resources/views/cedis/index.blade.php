@@ -16,6 +16,8 @@
         <thead>
         <tr>
             <th class="px-4 py-2">{{ __("Nombre del centro de distribución") }} </th>
+            <th class="px-4 py-2">{{ __("Pollo Vivo") }} </th>
+            <th class="px-4 py-2">{{ __("Pollo Procesado") }} </th>
             <th class="px-4 py-2">{{ __("Acciones") }} </th>
         </tr>
         
@@ -25,6 +27,9 @@
         @forelse($cedis as $cedi)
         <tr>
             <td class="border px-4 py-2">{{ $cedi->nb_cedis }} </td>
+            <td class="border px-4 py-2">@if($cedi->pv == 1) {{__("Si")}} @else {{__("No")}} @endif </td>
+            <td class="border px-4 py-2">@if($cedi->pp == 1) {{__("Si")}} @else {{__("No")}} @endif</td>
+
             <td class="border px-4 py-2">
                 <a href="{{ route("cedis.edit", [ "cedi" =>  $cedi ]) }}"  class="text-blue-400"> {{ __("Editar") }} </a>
                 <a 

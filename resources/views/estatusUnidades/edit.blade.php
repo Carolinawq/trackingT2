@@ -3,7 +3,7 @@
 @section("content")
 
     <div class="flex justify-center flex-wrap p-4 mt-5">
-        @include("operaciones.form")
+        @include("estatusUnidades.form")
     </div>
 
 @endsection
