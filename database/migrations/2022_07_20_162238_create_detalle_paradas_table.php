@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParadasTable extends Migration
+class CreateDetalleParadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateParadasTable extends Migration
      */
     public function up()
     {
-        Schema::create('paradas', function (Blueprint $table) {
+        Schema::create('detalle_paradas', function (Blueprint $table) {
             $table->id();
-            $table->string('nb_parada');
-            $table->time('hora')->nullable();
-            $table->date('fecha');
-
-            $table->unsignedBigInteger('id_unidad');
-            $table->foreign("id_unidad")->references("id")->on("unidades");
 
             $table->unsignedBigInteger('id_motivo_parada');
             $table->foreign("id_motivo_parada")->references("id")->on("motivo_paradas");
 
+            $table->unsignedBigInteger('id_unidad');
+            $table->foreign("id_unidad")->references("id")->on("unidades");
+
             $table->string('ubicacion');
+            $table->date('fecha');
+
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreateParadasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paradas');
+        Schema::dropIfExists('detalle_paradas');
     }
 }

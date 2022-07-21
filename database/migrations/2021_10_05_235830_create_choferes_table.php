@@ -19,7 +19,6 @@ class CreateChoferesTable extends Migration
             $table->string('nb_chofer_a_paterno');
             $table->string('nb_chofer_a_materno')->nullable();
             $table->bigInteger('no_empleado')->unique();
-            $table->date('fecha');
             $table->timestamps();
             $table->boolean('isActive');
 

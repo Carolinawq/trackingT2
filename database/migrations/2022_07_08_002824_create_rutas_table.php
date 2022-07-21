@@ -16,6 +16,7 @@ class CreateRutasTable extends Migration
         Schema::create('rutas', function (Blueprint $table) {
             $table->id();
             $table->string('nb_ruta');
+            $table->boolean('isActive');
             $table->timestamps();
         });
     }

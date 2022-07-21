@@ -24,6 +24,7 @@
             </div>
             @enderror
 
+            <!--|
             <label class="mt-6 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 {{ __("Ubicación del centro de distribución") }}
             </label>
@@ -34,24 +35,32 @@
             <div class="border border-red-400 rounded-b bg-red-100 mt-1 px-4 py-3 text-red-700">
                 {{ $message }}
             </div>
-            @enderror
+            @enderror*/-->
 
         </div>
     </div>
 
-    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Selecciona la operación</label>
-    <select id="id_operacion" name="id_operacion" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Escoge la operación</option>
-        <option {{old('id_operacion',$cedi->id_operacion)=="1" ? 'selected':''}}  value="1">Pollo Vivo</option>
-        <option {{old('id_operacion',$cedi->id_operacion)=="2" ? 'selected':''}}  value="2">Pollo Procesado</option>
+    <label class="mt-8 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        {{ __("Selecciona las operaciones correspondientes") }}
+    </label>
+
+    <label for="pv" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">¿Cuenta con pollo vivo?</label>
+    <select id="pv" name="pv" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Selecciona</option>
+        <option {{old('pv',$cedi->pv)=="0" ? 'selected':''}}  value="0">No</option>
+        <option {{old('pv',$cedi->pv)=="1" ? 'selected':''}}  value="1">Si</option>
     </select>
 
-    <label for="isActive" class="mt-6 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Selecciona el estatus</label>
-    <select id="isActive" name="isActive" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option selected>Estatus</option>
-        <option {{old('isActive',$cedi->isActive)=="0" ? 'selected':''}}  value="0">Desactivado</option>
-        <option {{old('isActive',$cedi->isActive)=="1" ? 'selected':''}}  value="1">Activado</option>
+    <label for="pp" class="mt-6 block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">¿Cuenta con pollo procesado?</label>
+    <select id="pp" name="pp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected>Selecciona</option>
+        <option {{old('pp',$cedi->pp)=="0" ? 'selected':''}}  value="0">No</option>
+        <option {{old('pp',$cedi->pp)=="1" ? 'selected':''}}  value="1">Si</option>
     </select>
+
+    <!-- activar por hidden el valor 1 para isActive -->
+    <input name="isActive" value="1" type="hidden">
+
 
     <div class="mt-3 md:flex md:items-center">
         <div class="md:w-1/3">

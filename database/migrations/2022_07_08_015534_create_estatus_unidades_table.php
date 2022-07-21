@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJustificacionesTable extends Migration
+class CreateEstatusUnidadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateJustificacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('justificaciones', function (Blueprint $table) {
+        Schema::create('estatus_unidades', function (Blueprint $table) {
             $table->id();
-            $table->string('nb_justificaciones');
+            $table->string('nb_estatus');
+
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateJustificacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('justificaciones');
+        Schema::dropIfExists('estatus_unidades');
     }
 }

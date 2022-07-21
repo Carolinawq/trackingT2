@@ -3,7 +3,18 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CediController;
-use App\Http\Controllers\OperacioneController;
+use App\Http\Controllers\ChofereController;
+use App\Http\Controllers\EstatusUnidadesController;
+use App\Http\Controllers\AsignacionesController;
+use App\Http\Controllers\RutasController;
+use App\Http\Controllers\ParadasController;
+use App\Http\Controllers\MotivoParadasController;
+use App\Http\Controllers\EventosController;
+
+
+
+
+
 
 
 /*
@@ -28,6 +39,17 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource("operaciones", OperacioneController::class);  
-Route::resource("cedis", CediController::class);  
+Route::resource("choferes", ChofereController::class);  
+Route::resource("cedis", CediController::class);
+Route::resource("estatusUnidades", EstatusUnidadesController::class);  
+Route::resource("asignaciones", AsignacionesController::class);
+Route::resource("rutas", RutasController::class);
+Route::resource("paradas", ParadasController::class);
+Route::resource("motivoParadas", MotivoParadasController::class);
+Route::resource("eventos", EventosController::class);
+
+
+
+
+
 

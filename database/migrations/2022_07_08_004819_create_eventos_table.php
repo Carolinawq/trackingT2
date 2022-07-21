@@ -16,13 +16,10 @@ class CreateEventosTable extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('nb_evento');
-            $table->time('hora')->nullable();
-            $table->date('fecha');
-            $table->string('ubicacion');
+            $table->boolean('isActive');
+
             $table->timestamps();
 
-            $table->unsignedBigInteger('id_justificacion');
-            $table->foreign("id_justificacion")->references("id")->on("justificaciones");
         });
     }
 

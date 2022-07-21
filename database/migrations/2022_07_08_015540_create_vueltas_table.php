@@ -23,6 +23,9 @@ class CreateVueltasTable extends Migration
 
             $table->unsignedBigInteger('id_ruta');
             $table->foreign("id_ruta")->references("id")->on("rutas");
+
+            $table->unsignedBigInteger('id_unidad');
+            $table->foreign("id_unidad")->references("id")->on("unidades");
         });
     }
 

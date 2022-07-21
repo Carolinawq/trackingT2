@@ -29,11 +29,41 @@
             @auth
                 <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                     <div class="text-sm lg:flex-grow ml-3">
-                        <a href="{{ route("operaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Operaciones")}}
-                        </a>
+                        
                         <a href="{{ route("cedis.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
                             {{__("Cedis")}}
+                        </a>
+
+                        <a href="{{ route("choferes.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Choferes")}}
+                        </a>
+
+                        <a href="{{ route("asignaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Asignaciones")}}
+                        </a>
+
+                        <a href="{{ route("estatusUnidades.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Estatus Unidades")}}
+                        </a>
+
+                        <a href="{{ route("rutas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Rutas")}}
+                        </a>
+
+                        <a href="{{ route("paradas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Paradas")}}
+                        </a>
+
+                        <a href="{{ route("motivoParadas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Motivo paradas")}}
+                        </a>
+
+                        <a href="{{ route("eventos.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Eventos")}}
+                        </a>
+
+                        <a href="{{ route("justificaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Justificaciones")}}
                         </a>
                     </div>
                 </div>
