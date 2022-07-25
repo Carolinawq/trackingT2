@@ -1,0 +1,28 @@
+[2022-07-23 00:55:09.254] [exthost] [info] Extension host with pid 27523 started
+[2022-07-23 00:55:09.318] [exthost] [info] ExtensionService#_doActivateExtension vscode.microsoft-authentication, startup: false, activationEvent: 'onAuthenticationRequest:microsoft'
+[2022-07-23 00:55:09.373] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: true, activationEvent: '*'
+[2022-07-23 00:55:09.377] [exthost] [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+[2022-07-23 00:55:09.382] [exthost] [info] ExtensionService#_doActivateExtension vscode.ipynb, startup: true, activationEvent: '*'
+[2022-07-23 00:55:09.441] [exthost] [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+[2022-07-23 00:55:09.524] [exthost] [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+[2022-07-23 00:55:09.627] [exthost] [info] Eager extensions activated
+[2022-07-23 00:55:09.655] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onStartupFinished'
+[2022-07-23 00:55:09.668] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+[2022-07-23 00:55:09.674] [exthost] [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+[2022-07-23 00:55:51.538] [exthost] [info] Extension host terminating: received terminate message from renderer
+[2022-07-23 00:55:51.547] [exthost] [info] Extension host with pid 27523 exiting with code 0
+[2022-07-23 00:55:53.174] [exthost] [info] Extension host with pid 27796 started
+[2022-07-23 00:55:53.174] [exthost] [info] Skipping acquiring lock for /opt/lampp/htdocs/trackingT2/User/workspaceStorage/408626018da91442254e840f234b9eaf.
+[2022-07-23 00:55:53.289] [exthost] [info] ExtensionService#_doActivateExtension vscode.microsoft-authentication, startup: false, activationEvent: 'onAuthenticationRequest:microsoft'
+[2022-07-23 00:55:53.302] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: true, activationEvent: '*'
+[2022-07-23 00:55:53.304] [exthost] [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*'
+[2022-07-23 00:55:53.306] [exthost] [info] ExtensionService#_doActivateExtension vscode.ipynb, startup: true, activationEvent: '*'
+[2022-07-23 00:55:53.309] [exthost] [info] ExtensionService#_doActivateExtension vscode.npm, startup: true, activationEvent: 'workspaceContains:package.json'
+[2022-07-23 00:55:53.358] [exthost] [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+[2022-07-23 00:55:53.382] [exthost] [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+[2022-07-23 00:55:53.395] [exthost] [info] Eager extensions activated
+[2022-07-23 00:55:53.399] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onStartupFinished'
+[2022-07-23 00:55:53.403] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+[2022-07-23 00:55:54.066] [exthost] [info] ExtensionService#_doActivateExtension vscode.git, startup: false, activationEvent: 'api', root cause: vscode.github
+[2022-07-23 00:57:39.140] [exthost] [info] Extension host terminating: received terminate message from renderer
+[2022-07-23 00:57:39.163] [exthost] [info] Extension host with pid 27796 exiting with code 0

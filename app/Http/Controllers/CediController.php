@@ -54,13 +54,11 @@ class CediController extends Controller
         $this->validate($request, [
 
             "nb_cedis" => "required|max:140|unique:cedis",
-            "pp" => "required",
-            "pv" => "required",
             "isActive" => "required",
 
         ]);
 
-        Cedi::create($request->only("nb_cedis","pp","pv", "isActive"));
+        Cedi::create($request->only("nb_cedis","isActive"));
         return redirect(route("cedis.index"))
             ->with("success", __("¡Centro de distribución guardado!"));
 
@@ -95,13 +93,11 @@ class CediController extends Controller
         $this->validate($request, [
 
             "nb_cedis" => "required|max:140|unique:cedis,nb_cedis," . $cedi->id,
-            "pp" => "required",
-            "pv" => "required",
             "isActive" => "required",
 
         ]);
 
-        $cedi->fill($request->only("nb_cedis","pv","pp","isActive"))->save();
+        $cedi->fill($request->only("nb_cedis","isActive"))->save();
         return  back()->with("success", __("¡Operación actualizado!"));
     }
 

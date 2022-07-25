@@ -40,10 +40,12 @@
         </div>
     </div>
 
+    <!--
     <label class="mt-8 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
         {{ __("Selecciona las operaciones correspondientes") }}
     </label>
 
+    
     <label for="pv" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">¿Cuenta con pollo vivo?</label>
     <select id="pv" name="pv" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option selected>Selecciona</option>
@@ -56,7 +58,7 @@
         <option selected>Selecciona</option>
         <option {{old('pp',$cedi->pp)=="0" ? 'selected':''}}  value="0">No</option>
         <option {{old('pp',$cedi->pp)=="1" ? 'selected':''}}  value="1">Si</option>
-    </select>
+    </select>-->
 
     <!-- activar por hidden el valor 1 para isActive -->
     <input name="isActive" value="1" type="hidden">

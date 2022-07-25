@@ -9,7 +9,7 @@ class Cedi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nb_cedis", "pp", "pv", "isActive"];
+    protected $fillable = ["nb_cedis","isActive"];
 
     
     public function cedis(){

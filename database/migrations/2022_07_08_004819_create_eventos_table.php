@@ -17,7 +17,6 @@ class CreateEventosTable extends Migration
             $table->id();
             $table->string('nb_evento');
             $table->boolean('isActive');
-
             $table->timestamps();
 
         });
