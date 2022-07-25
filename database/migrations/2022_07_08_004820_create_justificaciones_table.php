@@ -16,6 +16,10 @@ class CreateJustificacionesTable extends Migration
         Schema::create('justificaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nb_justificacion');
+
+            $table->unsignedBigInteger('id_evento');
+            $table->foreign("id_evento")->references("id")->on("eventos");
+            $table->boolean('isActive');
             $table->timestamps();
         });
     }

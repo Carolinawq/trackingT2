@@ -16,8 +16,6 @@ class CreateCedisTable extends Migration
         Schema::create('cedis', function (Blueprint $table) {
             $table->id();
             $table->string('nb_cedis')->unique();
-            $table->boolean('pp');
-            $table->boolean('pv');
             $table->boolean('isActive');
             $table->timestamps();
         });

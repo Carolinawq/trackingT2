@@ -29,9 +29,17 @@
             @auth
                 <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                     <div class="text-sm lg:flex-grow ml-3">
+
+                        <a href="{{ route("operaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Operaciones")}}
+                        </a>
                         
                         <a href="{{ route("cedis.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
                             {{__("Cedis")}}
+                        </a>
+
+                        <a href="{{ route("detalleCedisOperaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                            {{__("Asignar operaciones a cedis")}}
                         </a>
 
                         <a href="{{ route("choferes.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
