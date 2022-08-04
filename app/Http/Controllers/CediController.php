@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cedi;
+use App\Models\Operacione;
+
 use App\Models\Chofere;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -22,10 +25,23 @@ class CediController extends Controller
     public function index()
     {
         $cedis = Cedi::with("cedis")->paginate(10);
+            //join para consultar las operaciones de cada cedis
+            /*$consultarOperacionesCedis = DB::table('detalle_cedis_operaciones')
+            ->join('operaciones', 'detalle_cedis_operaciones.id_operacion', '=', 'operaciones.id')
+            ->join('cedis', 'detalle_cedis_operaciones.id_cedis', '=', 'cedis.id')
+            ->select('cedis.id','cedis.nb_cedis','operaciones.nb_operacion')
+            ->paginate(10);*/
 
 
 
-        return view("cedis.index", compact("cedis"));
+
+
+
+
+
+        //return view("cedis.index", compact("consultarOperacionesCedis"));
+            return view("cedis.index", compact("cedis"));
+
     }   
 
     /**

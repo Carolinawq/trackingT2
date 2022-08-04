@@ -11,27 +11,30 @@
         </div>
     </div>
 
-
-    <table class="border-separate border-2 text-center border-gray-500 mt-3" style="width: 100%">
-        <thead>
+    @forelse($cedis as $cedi)
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="width: 100%">
+        <caption class="p-5 text-lg font-semibold justify-center  text-gray-900 bg-white dark:text-white dark:bg-gray-800" >{{ 'Cedi: '. $cedi->nb_cedis }}
+        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+        </caption>
+        
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-            <th class="px-4 py-2">{{ __("Nombre del centro de distribución") }} </th>
-            <th class="px-4 py-2">{{ __("Pollo Vivo") }} </th>
-            <th class="px-4 py-2">{{ __("Pollo Procesado") }} </th>
-            <th class="px-4 py-2">{{ __("Acciones") }} </th>
+            <th scope="col" class="py-3 px-6">{{ __("Pollo Vivo") }} </th>
+            <th scope="col" class="py-3 px-6">{{ __("Pollo Procesado") }} </th>
+            <th scope="col" class="py-3 px-6">{{ __("Acciones") }} </th>
         </tr>
         
         </thead>
 
+
     </tbody>
-        @forelse($cedis as $cedi)
-        <tr>
-            <td class="border px-4 py-2">{{ $cedi->nb_cedis }} </td>
-            <td class="border px-4 py-2">@if($cedi->pv == 1) {{__("Si")}} @else {{__("No")}} @endif </td>
-            <td class="border px-4 py-2">@if($cedi->pp == 1) {{__("Si")}} @else {{__("No")}} @endif</td>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="border px-4 py-2"></td>
+            <td class="border px-4 py-2"></td>
 
             <td class="border px-4 py-2">
-                <a href="{{ route("cedis.edit", [ "cedi" =>  $cedi ]) }}"  class="text-blue-400"> {{ __("Editar") }} </a>
+                <a href="{{ route("cedis.edit", [ "cedi" =>  $cedi->id ]) }}"  class="text-blue-400"> {{ __("Editar") }} </a>
                 <a 
                     href="#"  
                     class="text-red-400"
@@ -40,7 +43,7 @@
                     > {{ __("Eliminar") }}
                 </a>
 
-                <form id="delete-cedi-{{ $cedi->id }}-form" action="{{ route("cedis.destroy", ["cedi" => $cedi]) }}" method="POST" class="hidden">
+                <form id="delete-cedi-{{ $cedi->id }}-form" action="{{ route("cedis.destroy", ["cedi" => $cedi->id]) }}" method="POST" class="hidden">
                     @method("DELETE")
                     @csrf
                 </form>
@@ -59,9 +62,11 @@
             
         </tr>
 
-        @endforelse
         </tbody>
     </table>
+    </div>
+@endforelse
+
 
     @if($cedis->count())
         <div class="mt-3">

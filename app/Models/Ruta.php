@@ -9,7 +9,7 @@ class Ruta extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nb_ruta"];
+    protected $fillable = ["nb_ruta", "isActive"];
 
     
     public function rutas(){
