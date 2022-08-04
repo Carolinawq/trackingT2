@@ -13,6 +13,12 @@ use App\Http\Controllers\MotivoParadasController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\JustificacionesController;
 use App\Http\Controllers\DetalleCedisOperacionesController;
+use App\Http\Controllers\DetalleEventosController;
+use App\Http\Controllers\UnidadesController;
+
+
+
+
 
 
 
@@ -55,6 +61,13 @@ Route::resource("motivoParadas", MotivoParadasController::class);
 Route::resource("eventos", EventosController::class);
 Route::resource("justificaciones", JustificacionesController::class);
 Route::resource("detalleCedisOperaciones", DetalleCedisOperacionesController::class);
+Route::resource("detalleEventos", DetalleEventosController::class);
+Route::resource("unidades", UnidadesController::class);
+
+
+
+//Route::get('/asignaciones', [\App\Http\Controllers\AsignacionesPVController::class, 'index'])->name('asignaciones');
+Route::post('/asignacionesPV.consultarAsignacionesDeLaFecha', [\App\Http\Controllers\AsignacionesPVController::class, 'consultarAsignacionesDeLaFecha'])->name('asignacionesPV.consultarAsignacionesDeLaFecha');
 
 
 

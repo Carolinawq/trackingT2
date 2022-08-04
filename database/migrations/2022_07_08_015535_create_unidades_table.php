@@ -17,17 +17,10 @@ class CreateUnidadesTable extends Migration
             $table->id();
             $table->string('nb_unidad');
 
-            $table->unsignedBigInteger('id_estatus');
-            $table->foreign("id_estatus")->references("id")->on("estatus_unidades");
-
-            $table->unsignedBigInteger('id_evento');
-            $table->foreign("id_evento")->references("id")->on("eventos");
-
-            
+            $table->unsignedBigInteger('id_operacion');
+            $table->foreign("id_operacion")->references("id")->on("operaciones");
 
             $table->boolean('isActive');
-
-
             $table->timestamps();
         });
     }

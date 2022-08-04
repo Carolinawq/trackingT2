@@ -45,10 +45,12 @@ class RutasController extends Controller
         $this->validate($request, [
 
             "nb_ruta" => "required|max:40|unique:rutas",
+            "isActive" => "required",
+
 
         ]);
 
-        Ruta::create($request->only("nb_ruta"));
+        Ruta::create($request->only("nb_ruta", "isActive"));
         return redirect(route("rutas.index"))
             ->with("success", __("¡Ruta guardada!"));
     }
