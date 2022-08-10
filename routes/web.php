@@ -64,10 +64,21 @@ Route::resource("detalleCedisOperaciones", DetalleCedisOperacionesController::cl
 Route::resource("detalleEventos", DetalleEventosController::class);
 Route::resource("unidades", UnidadesController::class);
 
+Route::get('/asignaciones/operacion/{id_operacion}', [AsignacionesController::class, 'index'])->name('asignaciones');
 
 
-//Route::get('/asignaciones', [\App\Http\Controllers\AsignacionesPVController::class, 'index'])->name('asignaciones');
-Route::post('/asignacionesPV.consultarAsignacionesDeLaFecha', [\App\Http\Controllers\AsignacionesPVController::class, 'consultarAsignacionesDeLaFecha'])->name('asignacionesPV.consultarAsignacionesDeLaFecha');
+Route::get('/asignaciones/operacion/{id_operacion}/cedis/{id_cedis}', [AsignacionesController::class, 'registrarAsignacion'])->name('registrarAsignacion');
+
+//ruta de la table unidades en ruta
+Route::post('/asignaciones/store', [AsignacionesController::class, 'store'])->name('asignaciones.store');
+
+
+Route::post('/asignaciones/tablaUnidadesRuta', [AsignacionesController::class, 'tablaUnidadesRuta'])->name('asignaciones.tablaUnidadesRuta');
+
+
+
+
+//Route::post('/eventos/guardarJustificacion', [EventosController::class, 'guardarJustificacion'])->name('eventos.guardarJustificacion');
 
 
 
