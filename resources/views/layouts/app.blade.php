@@ -93,8 +93,8 @@
                                             <a href="{{ route('asignaciones', ['id_operacion' => 2]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Procesado') }}</a>
                                         </div>
                                     </div>
-                                    <a href="{{ route("choferes.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                                    {{__("Choferes")}}
+                                    <a href="{{ route('tratarParadas') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                                    {{__("Paradas")}}
                                     </a>
                                 </div>
                             </div>
