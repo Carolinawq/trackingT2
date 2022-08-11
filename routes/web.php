@@ -76,6 +76,12 @@ Route::post('/asignaciones/store', [AsignacionesController::class, 'store'])->na
 Route::post('/asignaciones/tablaUnidadesRuta', [AsignacionesController::class, 'tablaUnidadesRuta'])->name('asignaciones.tablaUnidadesRuta');
 
 
+Route::get('/tratarParadas', [ParadasController::class, 'tratarParadas'])->name('tratarParadas');
+
+Route::get('/tratarParadas/registrarParada', [ParadasController::class, 'registrarParada'])->name('paradas.registrarParada');
+
+Route::post('/paradas/consultarCedis',  [ParadasController::class, 'consultarCedis'])->name('paradas.consultarCedis');
+
 
 
 //Route::post('/eventos/guardarJustificacion', [EventosController::class, 'guardarJustificacion'])->name('eventos.guardarJustificacion');

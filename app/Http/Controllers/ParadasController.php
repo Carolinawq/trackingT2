@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Parada;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+
 
 class ParadasController extends Controller
 {
@@ -108,4 +112,49 @@ class ParadasController extends Controller
         $parada->delete();
         return back()->with("success", __("¡Parada eliminada!"));
     }
+
+
+    public function tratarParadas(Request $request)
+    {
+
+        $textButton = __("Registrar");
+        $route = route("paradas.registrarParada");
+
+        if(!empty($fecha_parada)){
+            $fecha_parada= $request->fecha_parada;
+
+        }else{
+            $fecha_parada= Carbon::now()->format("Y-m-d");
+            //echo $fecha_ruta;
+        }
+
+        $operaciones = DB::table('operaciones')
+        ->select('operaciones.*')
+        ->get();
+
+        return view("paradas.tratarParadas", compact("textButton","route","fecha_parada","operaciones"));
+    }
+
+
+    public function consultarCedis(Request $request)
+    {
+
+        $id_operacion = $request->id_operacion;
+
+
+
+        $cedis = DB::table('detalle_cedis_operaciones')
+        ->Join('cedis', 'detalle_cedis_operaciones.id_cedis', '=', 'cedis.id')
+        ->where('detalle_cedis_operaciones.id_operacion', "=", $id_operacion)
+        ->select('cedis.*')
+        ->get();
+
+        return response()->json($cedis);
+    }
+
+
+
+
+
+
 }
