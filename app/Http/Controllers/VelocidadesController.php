@@ -95,5 +95,17 @@ class VelocidadesController extends Controller
     public function importarVelocidades(Request $request)
     {
 
+        if(request()->file('velocidades')){
+            //importar HOJA 0 plantilla-sistema-reportes
+            Excel::import(new MultipleSheetsImportVelocidades, request()->file('velocidades'));
+
+            return back()->with('success','¡Archivo subido correctamente!');
+
+
+
+        }
+
     }
+
+    
 }
