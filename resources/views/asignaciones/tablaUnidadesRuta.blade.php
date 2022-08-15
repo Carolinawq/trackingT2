@@ -3,7 +3,7 @@
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg" >
             <table name="example" id="example" class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="width: 100%">
                 <caption class="p-5 text-lg font-semibold justify-center  text-gray-900 bg-white dark:text-white dark:bg-gray-800" >
-                    <h1 class="mb-5">@forelse($cedis as $cedi) Unidades en ruta {{$cedi->nb_cedis }} @endforeach {{$fecha_ruta}}</h1>
+                    <h1 class="mb-5">@forelse($cedis as $cedi) Unidades en ruta {{$cedi->nb_cedis }} @endforeach {{$fecha_imprimir}}</h1>
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Unidades en ruta.</p>
                 </caption>
 
@@ -63,11 +63,13 @@
 
         </table>
     </div>
+    <br>
 
     <!--tabla de otras unidades (unidades que no estan en ruta) -->
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table name="example" id="example" class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="width: 100%">
                 <caption class="p-5 text-lg font-semibold justify-center  text-gray-900 bg-white dark:text-white dark:bg-gray-800" >
+                    <h1 class="mb-5">@forelse($cedis as $cedi) Otras unidades {{$cedi->nb_cedis }} @endforeach {{$fecha_imprimir}}</h1>
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Otras unidades (Prestamo, taller, baja, baja demanda).</p>
                 </caption>
 

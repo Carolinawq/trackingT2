@@ -129,11 +129,11 @@
  
 
 
-
+   <!-- aquí aparece la tabla llamada por ajax -->
    <div class="" name="tabla_unidades_ruta" id="tabla_unidades_ruta"></div>
  
 
-
+   <!-- al cargar la pagina se ejecuta la funcion informacionFlota para cargar la tabla con la fecha por defecto -->
     <body onload="informacionFlota()">
      <script>
    
@@ -143,6 +143,8 @@
    
      </script>
    </body>
+
+   
 <script>
     //deahabilita selects cuando el estatus de unidad sea diferente a ruta
         let chofer = document.querySelector("#id_chofer");

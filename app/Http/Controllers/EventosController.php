@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
+use App\Models\DetalleEvento;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
 
 class EventosController extends Controller
 {
@@ -117,4 +122,93 @@ class EventosController extends Controller
         $evento->delete();
         return back()->with("success", __("¡Evento eliminado!"));
     }
+
+
+    public function tratarEventos(Request $Request)
+    {
+        $textButton = __("Registrar");
+        $route = route("eventos.registrarEventos");
+
+        if(!empty($fecha_parada)){
+            $fecha_evento= $request->fecha_evento;
+            $fecha_evento_imprimir = Carbon::parse($request->fecha_evento)->format("d-m-Y");
+
+
+        }else{
+            $fecha_evento= Carbon::now()->format("Y-m-d");
+            $fecha_evento_imprimir = Carbon::parse($fecha_evento)->format("d-m-Y");
+
+            //echo $fecha_ruta;
+        }
+
+        $operaciones = DB::table('operaciones')
+        ->select('operaciones.*')
+        ->get();
+
+        return view("eventos.tratarEventos", compact("textButton", "route","fecha_evento","fecha_evento_imprimir", "operaciones"));
+
+    }
+
+    public function consultarUnidades(Request $request)
+    {
+
+        $id_operacion = $request->id_operacion;
+
+
+
+        $unidades = DB::table('unidades')
+        ->where('unidades.id_operacion', "=", $id_operacion)
+        ->select('unidades.*')
+        ->get();
+
+        return response()->json($unidades);
+    }
+
+    public function consultarEventos(Request $request)
+    {
+
+
+        $eventos = DB::table('eventos')
+        ->select('eventos.*')
+        ->get();
+
+        return response()->json($eventos);
+    }
+
+    public function consultarJustificacionEventos(Request $request)
+    {
+
+        $id_evento = $request->id_evento;
+
+
+        $justificacionEventos = DB::table('justificaciones')
+        ->where('justificaciones.id_evento', "=", $id_evento)
+        ->select('justificaciones.*')
+        ->get();
+
+        return response()->json($justificacionEventos);
+    }
+
+    public function registrarEventos(Request $request)
+    {
+        $this->validate($request, [
+
+            "fecha_evento" => "required",
+            "id_unidad" => "required",
+            "id_justificacion" => "required",
+            "ubicacion_inicial" => "required",
+            "ubicacion_final" => "nullable",
+            "hora_inicial" => "required",
+            "hora_final" => "nullable",
+            "descripcion" => "required",
+
+
+            ]);
+
+    
+            DetalleEvento::create($request->only("fecha_evento", "id_unidad", "id_justificacion" , "ubicacion_inicial", "ubicacion_final", "hora_inicial", "hora_final","descripcion" ));
+            return redirect()->back()->with("success", __("¡Evento registrado!"))->withInput();
+  
+    }
+
 }

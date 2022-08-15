@@ -32,7 +32,7 @@
                 </div>
 
                 {{-- se agrego esta opcion de navegacion --}}
-            @auth
+                    @auth
                 <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                     <div class="text-sm lg:flex-grow ml-3">
                         <!--
@@ -96,8 +96,13 @@
                                     <a href="{{ route('tratarParadas') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
                                     {{__("Paradas")}}
                                     </a>
+                                    <a href="{{ route('tratarEventos') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                                    {{__("Eventos")}}
+                                    </a>
+                                    <a href="{{ route('subirVelocidades') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
+                                    {{__("Velocidades")}}
+                                    </a>
                                 </div>
-                            </div>
                         </div>
                         
                     </div>
@@ -125,7 +130,9 @@
                     @endguest
                 </nav>
             </div>
+
         </header>
+    </div>
 
         @if(session("success"))
         <div class="bg-green-100 border border-blue-400 text-black-700 px-4 py-3 rounded relative" role="alert">
