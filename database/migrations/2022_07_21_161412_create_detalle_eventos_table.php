@@ -15,11 +15,12 @@ class CreateDetalleEventosTable extends Migration
     {
         Schema::create('detalle_eventos', function (Blueprint $table) {
             $table->id();
-            $table->string('ubicacion');
+            $table->string('ubicacion_inicial');
+            $table->string('ubicacion_final');
             $table->string('descripcion');
-            $table->date('fecha');
-            $table->time('hora');
-
+            $table->date('fecha_evento');
+            $table->time('hora_inicial');
+            $table->time('hora_final');
             $table->unsignedBigInteger('id_justificacion');
             $table->foreign("id_justificacion")->references("id")->on("justificaciones");
 

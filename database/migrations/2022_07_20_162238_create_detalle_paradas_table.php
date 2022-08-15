@@ -23,7 +23,7 @@ class CreateDetalleParadasTable extends Migration
             $table->foreign("id_unidad")->references("id")->on("unidades");
 
             $table->string('ubicacion');
-            $table->date('fecha');
+            $table->date('fecha_parada');
 
             $table->timestamps();
         });

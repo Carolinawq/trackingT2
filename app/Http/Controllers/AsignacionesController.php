@@ -163,6 +163,8 @@ class AsignacionesController extends Controller
         //request asignado a variables para consultar si ya existe un registro con los mismos valores
 
         $fecha_ruta = $request->fecha_ruta;
+        $fecha_imprimir = Carbon::parse($request->fecha_ruta)->format("d-m-Y");
+
         $id_cedis = $request->id_cedis;
         $id_operacion = $request->operacion;
         //$textButton = __("Guardar");
@@ -223,7 +225,7 @@ class AsignacionesController extends Controller
             ->get();
 
         //return view('velocidades/velocidades', compact('consultaRepeticionLocalChofer','consultaRepeticionForaneoChofer'));
-        return view("asignaciones.tablaUnidadesRuta", compact("unidades","estatusUnidades", "choferes", "rutas", "cedis", "id_operacion", "consultarAsignaciones", "consultarOtrasUnidades", "fecha_ruta"));   
+        return view("asignaciones.tablaUnidadesRuta", compact("unidades","estatusUnidades", "choferes", "rutas", "cedis", "id_operacion", "consultarAsignaciones", "consultarOtrasUnidades", "fecha_ruta", "fecha_imprimir"));   
     }
 
     /**

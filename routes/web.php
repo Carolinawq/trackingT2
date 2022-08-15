@@ -15,6 +15,8 @@ use App\Http\Controllers\JustificacionesController;
 use App\Http\Controllers\DetalleCedisOperacionesController;
 use App\Http\Controllers\DetalleEventosController;
 use App\Http\Controllers\UnidadesController;
+use App\Http\Controllers\VelocidadesController;
+
 
 
 
@@ -64,7 +66,14 @@ Route::resource("detalleCedisOperaciones", DetalleCedisOperacionesController::cl
 Route::resource("detalleEventos", DetalleEventosController::class);
 Route::resource("unidades", UnidadesController::class);
 
+
+//routes del nav del layout
 Route::get('/asignaciones/operacion/{id_operacion}', [AsignacionesController::class, 'index'])->name('asignaciones');
+Route::get('/tratarParadas', [ParadasController::class, 'tratarParadas'])->name('tratarParadas');
+Route::get('/tratarEventos', [EventosController::class, 'tratarEventos'])->name('tratarEventos');
+Route::get('/velocidades/subirVelocidades', [VelocidadesController::class, 'subirVelocidades'])->name('subirVelocidades');
+
+
 
 
 Route::get('/asignaciones/operacion/{id_operacion}/cedis/{id_cedis}', [AsignacionesController::class, 'registrarAsignacion'])->name('registrarAsignacion');
@@ -76,12 +85,27 @@ Route::post('/asignaciones/store', [AsignacionesController::class, 'store'])->na
 Route::post('/asignaciones/tablaUnidadesRuta', [AsignacionesController::class, 'tablaUnidadesRuta'])->name('asignaciones.tablaUnidadesRuta');
 
 
-Route::get('/tratarParadas', [ParadasController::class, 'tratarParadas'])->name('tratarParadas');
+Route::post('/tratarParadas/registrarParadas', [ParadasController::class, 'registrarParadas'])->name('paradas.registrarParadas');
+Route::post('/tratarEventos/registrarEventos', [EventosController::class, 'registrarEventos'])->name('eventos.registrarEventos');
 
-Route::get('/tratarParadas/registrarParada', [ParadasController::class, 'registrarParada'])->name('paradas.registrarParada');
+
+Route::post('/paradas/consultarUnidades',  [ParadasController::class, 'consultarUnidades'])->name('paradas.consultarUnidades');
+Route::post('/eventos/consultarUnidades',  [EventosController::class, 'consultarUnidades'])->name('eventos.consultarUnidades');
+
+
+Route::post('/paradas/consultarParadas',  [ParadasController::class, 'consultarParadas'])->name('paradas.consultarParadas');
+Route::post('/eventos/consultarEventos',  [EventosController::class, 'consultarEventos'])->name('eventos.consultarEventos');
+
+
+Route::post('/paradas/consultarMotivosParadas',  [ParadasController::class, 'consultarMotivosParadas'])->name('paradas.consultarMotivosParadas');
+Route::post('/eventos/consultarJustificacionEventos',  [EventosController::class, 'consultarJustificacionEventos'])->name('eventos.consultarJustificacionEventos');
+
 
 Route::post('/paradas/consultarCedis',  [ParadasController::class, 'consultarCedis'])->name('paradas.consultarCedis');
 
+Route::post('/paradas/tablaParadas',  [ParadasController::class, 'tablaParadas'])->name('paradas.tablaParadas');
+
+Route::get('/velocidades/importarVelocidades', [VelocidadesController::class, 'importarVelocidades'])->name('importarVelocidades');
 
 
 //Route::post('/eventos/guardarJustificacion', [EventosController::class, 'guardarJustificacion'])->name('eventos.guardarJustificacion');
