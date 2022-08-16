@@ -5,8 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Velocidade;
 use Illuminate\Http\Request;
 
+//librerias de laravel-excel
+use Excel;
+use App\Imports\VelocidadesImport;
+
+
 class VelocidadesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -95,9 +106,11 @@ class VelocidadesController extends Controller
     public function importarVelocidades(Request $request)
     {
 
+        //se importaron las librerias de de aquí https://docs.laravel-excel.com/3.1/getting-started/installation.html
+
         if(request()->file('velocidades')){
             //importar HOJA 0 plantilla-sistema-reportes
-            Excel::import(new MultipleSheetsImportVelocidades, request()->file('velocidades'));
+            Excel::import(new VelocidadesImport, request()->file('velocidades'));
 
             return back()->with('success','¡Archivo subido correctamente!');
 

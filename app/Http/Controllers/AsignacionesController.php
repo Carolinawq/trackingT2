@@ -209,7 +209,7 @@ class AsignacionesController extends Controller
             ->where('unidades.id_operacion', "=", $id_operacion)
             ->where('choferes.id_cedis', "=", $id_cedis)
             ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', "=", $fecha_ruta)
-            ->orderBy('detalle_est_unid_chof_rut_unids.no_vuelta', 'asc')
+            ->orderBy('detalle_est_unid_chof_rut_unids.id', 'asc')
             ->get();    
         //echo 'fecha: '.' '.$fecha.' cedi: '.$cedi.' id operacion: '.$id_operacion;
 
