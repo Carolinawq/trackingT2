@@ -102,6 +102,15 @@
                                     <a href="{{ route('subirVelocidades') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
                                     {{__("Velocidades")}}
                                     </a>
+                                    <div x-data="{ dropdownOpen: false }" class="relative">
+                                        <button @click="dropdownOpen = !dropdownOpen" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                        Reportes
+                                        </button>
+                                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
+                                            <a href="{{ route('reportes', ['id_operacion' => 1]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Vivo') }}</a>
+                                            <a href="{{ route('reportes', ['id_operacion' => 2]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Procesado') }}</a>
+                                        </div>
+                                    </div>
                                 </div>
                         </div>
                         

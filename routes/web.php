@@ -16,6 +16,7 @@ use App\Http\Controllers\DetalleCedisOperacionesController;
 use App\Http\Controllers\DetalleEventosController;
 use App\Http\Controllers\UnidadesController;
 use App\Http\Controllers\VelocidadesController;
+use App\Http\Controllers\ReportesController;
 
 
 
@@ -72,7 +73,7 @@ Route::get('/asignaciones/operacion/{id_operacion}', [AsignacionesController::cl
 Route::get('/tratarParadas', [ParadasController::class, 'tratarParadas'])->name('tratarParadas');
 Route::get('/tratarEventos', [EventosController::class, 'tratarEventos'])->name('tratarEventos');
 Route::get('/velocidades/subirVelocidades', [VelocidadesController::class, 'subirVelocidades'])->name('subirVelocidades');
-
+Route::get('/reportes/operacion/{id_operacion}', [ReportesController::class, 'index'])->name('reportes');
 
 
 
@@ -105,7 +106,21 @@ Route::post('/paradas/consultarCedis',  [ParadasController::class, 'consultarCed
 
 Route::post('/paradas/tablaParadas',  [ParadasController::class, 'tablaParadas'])->name('paradas.tablaParadas');
 
-Route::get('/velocidades/importarVelocidades', [VelocidadesController::class, 'importarVelocidades'])->name('importarVelocidades');
+Route::post('/velocidades/importarVelocidades', [VelocidadesController::class, 'importarVelocidades'])->name('importarVelocidades');
+
+Route::post('/reportes/consultarCedis',  [ReportesController::class, 'consultarCedis'])->name('consultarCedis');
+
+Route::post('/reportes/generarReportes',  [ReportesController::class, 'generarReportes'])->name('generarReportes');
+
+Route::post('/reportes/eventosSeguridad', [ReportesController::class, 'eventosSeguridad'])->name('eventosSeguridad');
+
+Route::post('/reportes/plantillaReportes', [ReportesController::class, 'plantillaReportes'])->name('reportes.plantillaReportes');
+
+Route::post('/reportes/eventosSeguridad',  [ReportesController::class, 'eventosSeguridad'])->name('reportes.eventosSeguridad');
+
+Route::post('/reportes/descripcionEventos',  [ReportesController::class, 'descripcionEventos'])->name('reportes.descripcionEventos');
+
+
 
 
 //Route::post('/eventos/guardarJustificacion', [EventosController::class, 'guardarJustificacion'])->name('eventos.guardarJustificacion');
