@@ -21,9 +21,9 @@ class CreateDetalleEventosTable extends Migration
             $table->date('fecha_evento');
             $table->time('hora_inicial');
             $table->time('hora_final')->nullable;
+            $table->time('duracion_evento');
             $table->unsignedBigInteger('id_justificacion');
             $table->foreign("id_justificacion")->references("id")->on("justificaciones");
-
             $table->unsignedBigInteger('id_unidad');
             $table->foreign("id_unidad")->references("id")->on("unidades");
 

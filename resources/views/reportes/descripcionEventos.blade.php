@@ -29,7 +29,7 @@
                 </td>
                 <td class="px-2">{{$row->hora_inicial}}</td>
                 <td class="px-2">{{$row->hora_final}}</td>
-                <td class="px-2">00:00</td>
+                <td class="px-2">{{$row->duracion_evento}}</td>
                 <td class="px-2">
                   <p class="underline text-blue-600 text-sm">
                     <a href="{{$row->ubicacion_inicial}}"  target="_blank">Ir.</a>.

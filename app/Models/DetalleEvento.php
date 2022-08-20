@@ -9,6 +9,6 @@ class DetalleEvento extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["fecha_evento","id_unidad", "id_justificacion" , "ubicacion_inicial", "ubicacion_final", "hora_inicial", "hora_final","descripcion" ];
+    protected $fillable = ["fecha_evento","id_unidad", "id_justificacion" , "ubicacion_inicial", "ubicacion_final","duracion_evento", "hora_inicial", "hora_final","descripcion" ];
 
 }

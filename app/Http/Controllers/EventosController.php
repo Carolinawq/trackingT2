@@ -7,6 +7,8 @@ use App\Models\DetalleEvento;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use DateTime;
+
 
 
 
@@ -191,6 +193,22 @@ class EventosController extends Controller
 
     public function registrarEventos(Request $request)
     {
+
+        $hora_inicial = new DateTime($request->hora_inicial);
+        $hora_final = new DateTime($request->hora_final);
+
+        //formatear fecha antes de poder hacer la resta y guardar
+        $hora_inicial->format('%h:%i:%s');
+        $hora_final->format('%h:%i:%s');
+        $duracion_evento = $hora_inicial->diff($hora_final);
+        $duracion_evento = $duracion_evento->format('%H:%I:%S');
+
+        //se agrego composer require laravel/helpers en la terminal para agregar los helpers
+        //agregar objeto $no_vuelta al array que llego a la funcion para insertar el no de vuelta correspiendiente
+        $request = array_add($request, 'duracion_evento', $duracion_evento);
+
+
+
         $this->validate($request, [
 
             "fecha_evento" => "required",
@@ -201,12 +219,13 @@ class EventosController extends Controller
             "hora_inicial" => "required",
             "hora_final" => "nullable",
             "descripcion" => "required",
+            "duracion_evento" => "nullable",
 
 
             ]);
 
     
-            DetalleEvento::create($request->only("fecha_evento", "id_unidad", "id_justificacion" , "ubicacion_inicial", "ubicacion_final", "hora_inicial", "hora_final","descripcion" ));
+            DetalleEvento::create($request->only("fecha_evento", "id_unidad", "id_justificacion" , "ubicacion_inicial", "ubicacion_final", "duracion_evento","hora_inicial", "hora_final","descripcion" ));
             return redirect()->back()->with("success", __("¡Evento registrado!"))->withInput();
   
     }

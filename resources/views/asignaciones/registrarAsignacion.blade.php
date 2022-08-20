@@ -60,6 +60,8 @@
                             <tr>
                                 <th scope="col" class="py-3 px-6">{{ __("Unidad") }} </th>
                                 <th scope="col" class="py-3 px-6">{{ __("Estatus") }} </th>
+                                <th scope="col" class="py-3 px-6">{{ __("Cedi orignen") }} </th>
+                                <th scope="col" class="py-3 px-6">{{ __("Cedi destino") }} </th>
                                 <th scope="col" class="py-3 px-6">{{ __("Tipo ruta") }} </th>
                                 <th scope="col" class="py-3 px-6">{{ __("Chofer") }} </th>
                                 <th scope="col" class="py-3 px-6">{{ __("Acciones") }} </th>
@@ -91,6 +93,18 @@
                                     @foreach ($estatusUnidades as $estatusUnidad) 
                                         <option value="{{ $estatusUnidad->id }}">{{ $estatusUnidad->nb_estatus }}</option>
                                     @endforeach
+                                </select>
+                            </td>
+                            <td class="border px-4 py-2 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                <select id="" name="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option disabled selected>Selecciona</option>
+                                    
+                                </select>
+                            </td>
+                            <td class="border px-4 py-2 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                <select id="" name="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option disabled selected>Selecciona</option>
+                                    
                                 </select>
                             </td>
                             <td class="border px-4 py-2 font-medium text-gray-900 dark:text-white whitespace-nowrap">

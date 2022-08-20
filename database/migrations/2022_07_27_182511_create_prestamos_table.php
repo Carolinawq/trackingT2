@@ -16,9 +16,6 @@ class CreatePrestamosTable extends Migration
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('id_cedis_origen');
-            $table->foreign("id_cedis_origen")->references("id")->on("cedis");
-
             $table->unsignedBigInteger('id_cedis_destino');
             $table->foreign("id_cedis_destino")->references("id")->on("cedis");
 

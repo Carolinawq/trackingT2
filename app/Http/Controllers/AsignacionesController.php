@@ -88,6 +88,13 @@ class AsignacionesController extends Controller
             ->select('cedis.*')
             ->get();
 
+
+        /*$prestamos = DB::table('prestamos')
+            ->where('cedis.id', "=", $id_cedis)*/
+
+
+
+        //antes de contemplar los prestamos
         $unidades = DB::table('detalle_cedis_unidades')
             ->Join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
             ->where('unidades.isActive', "=", 1)
@@ -95,6 +102,17 @@ class AsignacionesController extends Controller
             ->where('detalle_cedis_unidades.id_cedis', "=", $id_cedis)
             ->select('unidades.nb_unidad', 'unidades.id')
             ->get();
+
+
+        /*$unidades = DB::table('prestamos')
+            ->Join('detalle_cedis_unidades', 'prestamos.id_unidad', '=', 'detalle_cedis_unidades.id_unidad')
+            ->Join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->where('unidades.isActive', "=", 1)
+            ->where('unidades.id_operacion', "=", $id_operacion)
+            ->where('prestamos.id_cedis_destino', "=", $id_cedis)
+            ->select('unidades.nb_unidad', 'unidades.id')
+            ->get();*/
+
 
 
         $choferes = DB::table('choferes')
@@ -148,7 +166,7 @@ class AsignacionesController extends Controller
 
 
 
-        //echo $consultarAsignaciones;
+        //echo $unidades;
         return view("asignaciones.registrarAsignacion", compact("textButton", "route","cedis","unidades", "choferes", "rutas", "estatusUnidades", "id_operacion", "fecha_ruta", "consultarAsignaciones", "id_cedis", "consultarOtrasUnidades")); 
 
     }
@@ -170,6 +188,7 @@ class AsignacionesController extends Controller
         //$textButton = __("Guardar");
    //     $route = route("asignaciones.store");
 
+   //antes de contemplar los prestamos
         $unidades = DB::table('detalle_cedis_unidades')
             ->Join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
             ->where('unidades.isActive', "=", 1)
@@ -177,6 +196,8 @@ class AsignacionesController extends Controller
             ->where('detalle_cedis_unidades.id_cedis', "=", $id_cedis)
             ->select('unidades.nb_unidad', 'unidades.id')
             ->get();
+
+     
 
 
         $choferes = DB::table('choferes')

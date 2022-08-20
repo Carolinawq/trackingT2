@@ -120,6 +120,27 @@ Route::post('/reportes/eventosSeguridad',  [ReportesController::class, 'eventosS
 
 Route::post('/reportes/descripcionEventos',  [ReportesController::class, 'descripcionEventos'])->name('reportes.descripcionEventos');
 
+Route::post('/reportes/disponibilidadFlota',  [ReportesController::class, 'disponibilidadFlota'])->name('reportes.disponibilidadFlota');
+
+Route::post('/reportes/utilizacionFlota',  [ReportesController::class, 'utilizacionFlota'])->name('reportes.utilizacionFlota');
+
+Route::post('/reportes/informacionFlota',  [ReportesController::class, 'informacionFlota'])->name('reportes.informacionFlota');
+
+Route::post('/reportes/otrasUnidades',  [ReportesController::class, 'otrasUnidades'])->name('reportes.otrasUnidades');
+
+Route::post('/reportes/calcularExcesosVelocidad', [ReportesController::class, 'calcularExcesosVelocidad'])->name('reportes.calcularExcesosVelocidad');
+
+Route::post('/reportes/velocidadGraficoDos', [ReportesController::class, 'velocidadGraficoDos'])->name('reportes.velocidadGraficoDos');
+
+Route::post('/reportes/velocidadGraficoTres', [ReportesController::class, 'velocidadGraficoTres'])->name('reportes.velocidadGraficoTres');
+
+Route::post('/reportes/incidencias', [ReportesController::class, 'incidencias'])->name('reportes.incidencias');
+
+Route::post('/reportes/paradasAutorizadas', [ReportesController::class, 'paradasAutorizadas'])->name('reportes.paradasAutorizadas');
+
+Route::post('/reportes/paradasNoAutorizadas', [ReportesController::class, 'paradasNoAutorizadas'])->name('reportes.paradasNoAutorizadas');
+
+
 
 
 
