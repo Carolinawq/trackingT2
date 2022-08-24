@@ -76,10 +76,13 @@ class reportesController extends Controller
         ->select('operaciones.nb_operacion')
         ->get();
         
-        return view('reportes.plantillaReportes', compact('fechaDMY','cedis','operacion','fecha','id_cedis', 'id_operacion', 'agruparEventos'));
 
-        //echo $agruparEventos;
-
+        if ($agruparEventos->isEmpty()){
+            return view('reportes.plantillaReportes', compact('fechaDMY','cedis','operacion','fecha','id_cedis', 'id_operacion'));
+            
+        }else{
+            return view('reportes.plantillaReportes', compact('fechaDMY','cedis','operacion','fecha','id_cedis', 'id_operacion', 'agruparEventos'));
+        }
 
     }
 
@@ -108,7 +111,12 @@ class reportesController extends Controller
         ->get();
 
 
-        return view('reportes.eventosSeguridad', compact('agruparEventos'));
+        if ($agruparEventos->isEmpty()){
+            return view('reportes/sinEventos');
+
+        }else{
+            return view('reportes.eventosSeguridad', compact('agruparEventos'));
+        }
 
 
     }
@@ -227,8 +235,28 @@ class reportesController extends Controller
         $fecha = $request->fecha;
         $id_cedis = $request->id_cedis;
 
-        $estatusUnidades = DB::table('detalle_cedis_unidades')
-            ->select(DB::raw('count(*) as total, estatus_unidades.nb_estatus'))
+        $fechaDMY = Carbon::parse($fecha)->format('d-m-Y');
+
+
+        //indicar que la semana empieza lunes y terminar domingo para la grafica utilizacion de flota por semana
+        $fechaConsulta = Carbon::parse($fecha);
+        //$weekStartDate = $fechaConsulta->startOfWeek();
+        $lunesMasCercano = $fechaConsulta->startOfWeek(Carbon::MONDAY);
+
+        //sumar dias para obtener los dias de la semana a partir del lunes
+        $martesMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 1 days"));
+        $miercolesMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 2 days")); 
+        $juevesMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 3 days")); 
+        $viernesMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 4 days")); 
+        $sabadoMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 5 days")); 
+        $domingoMasCercano = date("Y-m-d",strtotime($lunesMasCercano."+ 6 days")); 
+
+        //$end = $now->endOfWeek(Carbon::MONDAY);
+
+        //echo $start;
+
+        /*$estatusUnidades = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total, estatus_unidades.nb_estatus, detalle_est_unid_chof_rut_unids.fecha_ruta'))
             ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
             ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
             ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
@@ -236,27 +264,360 @@ class reportesController extends Controller
             ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
             ->where('unidades.id_operacion', '=', $id_operacion)
             ->groupBy('nb_estatus')
+            ->groupBy('fecha_ruta')
+            ->having('total', '>', 0)
+            ->get();*/
+
+        
+        
+
+        if(Carbon::parse($fecha)->format('l') == 'Monday'){
+
+            //para saber cuantas graficas crear si es lunes solo crea 1
+            $lunes = 'true';
+            //se muestra en el pie de cada grafica
+            $lunesDMY = Carbon::parse($lunesMasCercano)->format('d-m-Y');
+
+            //echo 'el lunes mas carno es: '.$lunesMasCercano;
+            $estatusUnidadesLunes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $lunesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
             ->having('total', '>', 0)
             ->get();
 
+            $ruta_lunes = 'false';
+            $baja_demanda_lunes = 'false';
+            $prestamo_lunes = 'false';
+            $taller_lunes = 'false';
+            $descompostura_lunes = 'false';
+            $corralon_lunes = 'false';
+            $baja_lunes = 'false';
+
+            foreach($estatusUnidadesLunes as $estatusLunes){
+                if($estatusLunes->nb_estatus == 'Ruta'){
+                    $ruta_lunes = 'true';
+                    $total_ruta_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_lunes = 'true';
+                    $total_baja_demanda_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Prestamo'){
+                    $prestamo = 'true';
+                    $total_prestamo_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Taller'){
+                    $taller = 'true';
+                    $total_taller_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Descompostura'){
+                    $descompostura = 'true';
+                    $total_descompostura_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Corralon'){
+                    $corralon = 'true';
+                    $total_corralon_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja'){
+                    $baja = 'true';
+                    $total_baja_lunes = $estatusLunes->total;
+
+                }
+            }
+
+
+            if($ruta_lunes == 'false'){
+                $total_ruta_lunes = 0;
+            }
+            if($baja_demanda_lunes == 'false'){
+                $total_baja_demanda_lunes = 0;
+            }
+            if($prestamo_lunes == 'false'){
+                $total_prestamo_lunes = 0;
+            }
+            if($taller_lunes == 'false'){
+                $total_taller_lunes = 0;
+            }
+            if($descompostura_lunes == 'false'){
+                $total_descompostura_lunes = 0;
+            }
+            if($corralon_lunes == 'false'){
+                $total_corralon_lunes = 0;
+            }
+            if($baja_lunes == 'false'){
+                $total_baja_lunes = 0;
+            }
+            
+            
+
+            //echo $total_ruta_lunes.$total_baja_demanda_lunes.$total_prestamo_lunes.$total_taller_lunes.$total_descompostura_lunes.$total_corralon_lunes.$total_baja_lunes;
+
+            //echo $lunesDMY;
+            return view('reportes/utilizacionFlota', compact('fechaDMY'
+                                                            ,'lunes'
+                                                            ,'lunesDMY'
+                                                            ,'total_ruta_lunes'
+                                                            ,'total_baja_demanda_lunes'
+                                                            ,'total_prestamo_lunes'
+                                                            ,'total_taller_lunes'
+                                                            ,'total_descompostura_lunes'
+                                                            ,'total_corralon_lunes'
+                                                            ,'total_baja_lunes'
+
+                                                        ));
+
+
+        }elseif(Carbon::parse($fecha)->format('l') == 'Tuesday'){
+            //para saber cuantas graficas crear si es lunes solo crea 1
+            $martes = 'true';
+            //se muestra en el pie de cada grafica
+            $lunesDMY = Carbon::parse($lunesMasCercano)->format('d-m-Y');
+            $martesDMY = Carbon::parse($martesMasCercano)->format('d-m-Y');
+
+            $estatusUnidadesLunes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $lunesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            //echo 'el lunes mas carno es: '.$lunesMasCercano;
+            $estatusUnidadesMartes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $martesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            $ruta_lunes = 'false';
+            $baja_demanda_lunes = 'false';
+            $prestamo_lunes = 'false';
+            $taller_lunes = 'false';
+            $descompostura_lunes = 'false';
+            $corralon_lunes = 'false';
+            $baja_lunes = 'false';
+
+            foreach($estatusUnidadesLunes as $estatusLunes){
+                if($estatusLunes->nb_estatus == 'Ruta'){
+                    $ruta_lunes = 'true';
+                    $total_ruta_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_lunes = 'true';
+                    $total_baja_demanda_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Prestamo'){
+                    $prestamo = 'true';
+                    $total_prestamo_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Taller'){
+                    $taller = 'true';
+                    $total_taller_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Descompostura'){
+                    $descompostura = 'true';
+                    $total_descompostura_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Corralon'){
+                    $corralon = 'true';
+                    $total_corralon_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja'){
+                    $baja = 'true';
+                    $total_baja_lunes = $estatusLunes->total;
+
+                }
+            }
+
+
+            if($ruta_lunes == 'false'){
+                $total_ruta_lunes = 0;
+            }
+            if($baja_demanda_lunes == 'false'){
+                $total_baja_demanda_lunes = 0;
+            }
+            if($prestamo_lunes == 'false'){
+                $total_prestamo_lunes = 0;
+            }
+            if($taller_lunes == 'false'){
+                $total_taller_lunes = 0;
+            }
+            if($descompostura_lunes == 'false'){
+                $total_descompostura_lunes = 0;
+            }
+            if($corralon_lunes == 'false'){
+                $total_corralon_lunes = 0;
+            }
+            if($baja_lunes == 'false'){
+                $total_baja_lunes = 0;
+            }
+
+            $ruta_martes = 'false';
+            $baja_demanda_martes = 'false';
+            $prestamo_martes = 'false';
+            $taller_martes = 'false';
+            $descompostura_martes = 'false';
+            $corralon_martes = 'false';
+            $baja_martes = 'false';
+
+            foreach($estatusUnidadesMartes as $estatusMartes){
+                if($estatusMartes->nb_estatus == 'Ruta'){
+                    $ruta_martes = 'true';
+                    $total_ruta_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_martes = 'true';
+                    $total_baja_demanda_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Prestamo'){
+                    $prestamo_martes = 'true';
+                    $total_prestamo_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Taller'){
+                    $taller_martes = 'true';
+                    $total_taller_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Descompostura'){
+                    $descompostura_martes = 'true';
+                    $total_descompostura_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Corralon'){
+                    $corralon_martes = 'true';
+                    $total_corralon_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Baja'){
+                    $baja_martes = 'true';
+                    $total_baja_martes = $estatusMartes->total;
+
+                }
+            }
+
+
+            if($ruta_martes == 'false'){
+                $total_ruta_martes = 0;
+            }
+            if($baja_demanda_martes == 'false'){
+                $total_baja_demanda_martes = 0;
+            }
+            if($prestamo_martes == 'false'){
+                $total_prestamo_martes = 0;
+            }
+            if($taller_martes == 'false'){
+                $total_taller_martes = 0;
+            }
+            if($descompostura_martes == 'false'){
+                $total_descompostura_martes = 0;
+            }
+            if($corralon_martes == 'false'){
+                $total_corralon_martes = 0;
+            }
+            if($baja_martes == 'false'){
+                $total_baja_martes = 0;
+            }
+
+            //echo $lunesDMY;
+            return view('reportes/utilizacionFlota', compact('fechaDMY'
+                                                            ,'martes'
+                                                            ,'lunesDMY'
+                                                            ,'total_ruta_lunes'
+                                                            ,'total_baja_demanda_lunes'
+                                                            ,'total_prestamo_lunes'
+                                                            ,'total_taller_lunes'
+                                                            ,'total_descompostura_lunes'
+                                                            ,'total_corralon_lunes'
+                                                            ,'total_baja_lunes'
+                                                            ,'martesDMY'
+                                                            ,'total_ruta_martes'
+                                                            ,'total_baja_demanda_martes'
+                                                            ,'total_prestamo_martes'
+                                                            ,'total_taller_martes'
+                                                            ,'total_descompostura_martes'
+                                                            ,'total_corralon_martes'
+                                                            ,'total_baja_martes'
+
+                                                        ));
+
+        }elseif(Carbon::parse($fecha)->format('l') == 'Wednesday'){
+            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
+            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
+            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
+        }elseif(Carbon::parse($fecha)->format('l') == 'Thursday'){
+            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
+            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
+            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
+            echo 'el jueves mas cerno es: '.$juevesMasCercano.'<br>';
+        }elseif(Carbon::parse($fecha)->format('l') == 'Friday'){
+            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
+            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
+            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
+            echo 'el jueves mas cerno es: '.$juevesMasCercano.'<br>';
+            echo 'el viernes mas cerno es: '.$viernesMasCercano.'<br>';
+        }elseif(Carbon::parse($fecha)->format('l') == 'Saturday'){
+            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
+            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
+            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
+            echo 'el jueves mas cerno es: '.$juevesMasCercano.'<br>';
+            echo 'el viernes mas cerno es: '.$viernesMasCercano.'<br>';
+            echo 'el sabado mas cerno es: '.$sabadoMasCercano.'<br>';
+        }elseif(Carbon::parse($fecha)->format('l') == 'Sunday'){
+            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
+            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
+            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
+            echo 'el jueves mas cerno es: '.$juevesMasCercano.'<br>';
+            echo 'el viernes mas cerno es: '.$viernesMasCercano.'<br>';
+            echo 'el sabado mas cerno es: '.$sabadoMasCercano.'<br>';
+            echo 'el domingo mas cerno es: '.$domingoMasCercano.'<br>';
+        }
+
+
+
+
+        
+
  
-        $fechaDMY = Carbon::createFromFormat('Y-m-d', $fecha)->format('d/m/Y');
+        /*$fechaDMY = Carbon::createFromFormat('Y-m-d', $fecha)->format('d/m/Y');*/
 
-
-
-        //echo $estatus;
-        /*return view('unidades/utilizacionFlota',compact('ruta'
-                                                        , 'bajaDemanda'
-                                                        , 'sinOperador'
-                                                        , 'descompostura'
-                                                        , 'baja'
-                                                        , 'siniestrado'
-                                                        , 'prestamo'
-                                                        , 'taller'
-                                                        , 'corralon'
-                                                        , 'fechaDMY'
-                                                    )); */   
-        return view('reportes/utilizacionFlota', compact('estatusUnidades', 'fechaDMY'));
+ 
+        //return view('reportes/utilizacionFlota', compact('estatusUnidades', 'fechaDMY'));
+        //echo 'lunes: '.$lunesMasCercano. ' martes: '.$martesMasCercano;
+        //echo 'lunes: '.$lunesMasCercano.' martes: '.$martesMasCercano. ' miercoles: '.$miercolesMasCercano.' jueves: '.$juevesMasCercano. ' viernes: '.$viernesMasCercano.' sabado '.$sabadoMasCercano. ' domingo: '.$domingoMasCercano;
 
 
     }
