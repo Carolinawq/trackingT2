@@ -1745,7 +1745,8 @@ class reportesController extends Controller
             $martesDMY = Carbon::parse($martesMasCercano)->format('d-m-Y');
             $miercolesDMY = Carbon::parse($miercolesMasCercano)->format('d-m-Y');
             $juevesDMY = Carbon::parse($juevesMasCercano)->format('d-m-Y');
-            $viernesDMY = Carbon::parse($juevesMasCercano)->format('d-m-Y');
+            $viernesDMY = Carbon::parse($viernesMasCercano)->format('d-m-Y');
+            $sabadoDMY = Carbon::parse($sabadoMasCercano)->format('d-m-Y');
 
 
             $coloresEstatus = DB::table('estatus_unidades')
@@ -1819,6 +1820,20 @@ class reportesController extends Controller
             ->having('total', '>', 0)
             ->get();
 
+
+            $estatusUnidadesSabado = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $sabadoMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
             $ruta_lunes = 'false';
             $baja_demanda_lunes = 'false';
             $prestamo_lunes = 'false';
@@ -1839,27 +1854,27 @@ class reportesController extends Controller
 
                 }
                 if($estatusLunes->nb_estatus == 'Prestamo'){
-                    $prestamo = 'true';
+                    $prestamo_lunes = 'true';
                     $total_prestamo_lunes = $estatusLunes->total;
 
                 }
                 if($estatusLunes->nb_estatus == 'Taller'){
-                    $taller = 'true';
+                    $taller_lunes = 'true';
                     $total_taller_lunes = $estatusLunes->total;
 
                 }
                 if($estatusLunes->nb_estatus == 'Descompostura'){
-                    $descompostura = 'true';
+                    $descompostura_lunes = 'true';
                     $total_descompostura_lunes = $estatusLunes->total;
 
                 }
                 if($estatusLunes->nb_estatus == 'Corralon'){
-                    $corralon = 'true';
+                    $corralon_lunes = 'true';
                     $total_corralon_lunes = $estatusLunes->total;
 
                 }
                 if($estatusLunes->nb_estatus == 'Baja'){
-                    $baja = 'true';
+                    $baja_lunes = 'true';
                     $total_baja_lunes = $estatusLunes->total;
 
                 }
@@ -2165,11 +2180,80 @@ class reportesController extends Controller
                 $total_baja_viernes = 0;
             }
 
+            $ruta_sabado = 'false';
+            $baja_demanda_sabado = 'false';
+            $prestamo_sabado = 'false';
+            $taller_sabado = 'false';
+            $descompostura_sabado = 'false';
+            $corralon_sabado = 'false';
+            $baja_sabado = 'false';
+
+            foreach($estatusUnidadesSabado as $estatusSabado){
+                if($estatusSabado->nb_estatus == 'Ruta'){
+                    $ruta_sabado = 'true';
+                    $total_ruta_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_sabado = 'true';
+                    $total_baja_demanda_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Prestamo'){
+                    $prestamo_sabado = 'true';
+                    $total_prestamo_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Taller'){
+                    $taller_sabado = 'true';
+                    $total_taller_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Descompostura'){
+                    $descompostura = 'true';
+                    $total_descompostura_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Corralon'){
+                    $corralon_sabado = 'true';
+                    $total_corralon_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Baja'){
+                    $baja_sabado = 'true';
+                    $total_baja_sabado = $estatusSabado->total;
+
+                }
+            }
+
+
+            if($ruta_sabado == 'false'){
+                $total_ruta_sabado = 0;
+            }
+            if($baja_demanda_sabado == 'false'){
+                $total_baja_demanda_sabado = 0;
+            }
+            if($prestamo_sabado == 'false'){
+                $total_prestamo_sabado = 0;
+            }
+            if($taller_sabado == 'false'){
+                $total_taller_sabado = 0;
+            }
+            if($descompostura_sabado == 'false'){
+                $total_descompostura_sabado = 0;
+            }
+            if($corralon_sabado == 'false'){
+                $total_corralon_sabado = 0;
+            }
+            if($baja_sabado == 'false'){
+                $total_baja_sabado = 0;
+            }
+
             //echo $lunesDMY;
             return view('reportes/utilizacionFlota', compact(
                                                             'coloresEstatus'
                                                             ,'fechaDMY'
-                                                            ,'viernes'
+                                                            ,'sabado'
                                                             ,'lunesDMY'
                                                             ,'total_ruta_lunes'
                                                             ,'total_baja_demanda_lunes'
@@ -2210,16 +2294,673 @@ class reportesController extends Controller
                                                             ,'total_descompostura_viernes'
                                                             ,'total_corralon_viernes'
                                                             ,'total_baja_viernes'
+                                                            ,'sabadoDMY'
+                                                            ,'total_ruta_sabado'
+                                                            ,'total_baja_demanda_sabado'
+                                                            ,'total_prestamo_sabado'
+                                                            ,'total_taller_sabado'
+                                                            ,'total_descompostura_sabado'
+                                                            ,'total_corralon_sabado'
+                                                            ,'total_baja_sabado'
 
                                                         ));
         }elseif(Carbon::parse($fecha)->format('l') == 'Sunday'){
-            echo 'el lunes mas carno es: '.$lunesMasCercano.'<br>';
-            echo 'el martes mas cerno es: '.$martesMasCercano.'<br>';
-            echo 'el miercoless mas cerno es: '.$miercolesMasCercano.'<br>';
-            echo 'el jueves mas cerno es: '.$juevesMasCercano.'<br>';
-            echo 'el viernes mas cerno es: '.$viernesMasCercano.'<br>';
-            echo 'el sabado mas cerno es: '.$sabadoMasCercano.'<br>';
-            echo 'el domingo mas cerno es: '.$domingoMasCercano.'<br>';
+            //para saber cuantas graficas crear si es lunes solo crea 1
+            $domingo = 'true';
+            //se muestra en el pie de cada grafica
+            $lunesDMY = Carbon::parse($lunesMasCercano)->format('d-m-Y');
+            $martesDMY = Carbon::parse($martesMasCercano)->format('d-m-Y');
+            $miercolesDMY = Carbon::parse($miercolesMasCercano)->format('d-m-Y');
+            $juevesDMY = Carbon::parse($juevesMasCercano)->format('d-m-Y');
+            $viernesDMY = Carbon::parse($viernesMasCercano)->format('d-m-Y');
+            $sabadoDMY = Carbon::parse($sabadoMasCercano)->format('d-m-Y');
+            $domingoDMY = Carbon::parse($domingoMasCercano)->format('d-m-Y');
+
+
+            $coloresEstatus = DB::table('estatus_unidades')
+            ->select('nb_estatus','nb_color')
+            ->get();
+
+            $estatusUnidadesLunes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $lunesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            //echo 'el lunes mas carno es: '.$marteMasCercano;
+            $estatusUnidadesMartes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $martesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+                                    //echo 'el lunes mas carno es: '.$marteMasCercano;
+            $estatusUnidadesMiercoles = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $miercolesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            $estatusUnidadesJueves = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $juevesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            $estatusUnidadesViernes = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $viernesMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+
+            $estatusUnidadesSabado = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $sabadoMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            $estatusUnidadesDomingo = DB::table('detalle_cedis_unidades')
+            ->select(DB::raw('count(*) as total,   estatus_unidades.nb_estatus'),'fecha_ruta')
+            ->join('unidades', 'detalle_cedis_unidades.id_unidad', '=', 'unidades.id')
+            ->join('detalle_est_unid_chof_rut_unids', 'unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_unidad')
+            ->join('estatus_unidades', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades', '=', 'estatus_unidades.id')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $domingoMasCercano)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->groupBy('fecha_ruta')
+            ->groupBy('nb_estatus')
+            ->having('total', '>', 0)
+            ->get();
+
+            $ruta_lunes = 'false';
+            $baja_demanda_lunes = 'false';
+            $prestamo_lunes = 'false';
+            $taller_lunes = 'false';
+            $descompostura_lunes = 'false';
+            $corralon_lunes = 'false';
+            $baja_lunes = 'false';
+
+            foreach($estatusUnidadesLunes as $estatusLunes){
+                if($estatusLunes->nb_estatus == 'Ruta'){
+                    $ruta_lunes = 'true';
+                    $total_ruta_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_lunes = 'true';
+                    $total_baja_demanda_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Prestamo'){
+                    $prestamo_lunes = 'true';
+                    $total_prestamo_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Taller'){
+                    $taller_lunes = 'true';
+                    $total_taller_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Descompostura'){
+                    $descompostura_lunes = 'true';
+                    $total_descompostura_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Corralon'){
+                    $corralon_lunes = 'true';
+                    $total_corralon_lunes = $estatusLunes->total;
+
+                }
+                if($estatusLunes->nb_estatus == 'Baja'){
+                    $baja_lunes = 'true';
+                    $total_baja_lunes = $estatusLunes->total;
+
+                }
+            }
+
+
+            if($ruta_lunes == 'false'){
+                $total_ruta_lunes = 0;
+            }
+            if($baja_demanda_lunes == 'false'){
+                $total_baja_demanda_lunes = 0;
+            }
+            if($prestamo_lunes == 'false'){
+                $total_prestamo_lunes = 0;
+            }
+            if($taller_lunes == 'false'){
+                $total_taller_lunes = 0;
+            }
+            if($descompostura_lunes == 'false'){
+                $total_descompostura_lunes = 0;
+            }
+            if($corralon_lunes == 'false'){
+                $total_corralon_lunes = 0;
+            }
+            if($baja_lunes == 'false'){
+                $total_baja_lunes = 0;
+            }
+
+            $ruta_martes = 'false';
+            $baja_demanda_martes = 'false';
+            $prestamo_martes = 'false';
+            $taller_martes = 'false';
+            $descompostura_martes = 'false';
+            $corralon_martes = 'false';
+            $baja_martes = 'false';
+
+            foreach($estatusUnidadesMartes as $estatusMartes){
+                if($estatusMartes->nb_estatus == 'Ruta'){
+                    $ruta_martes = 'true';
+                    $total_ruta_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_martes = 'true';
+                    $total_baja_demanda_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Prestamo'){
+                    $prestamo_martes = 'true';
+                    $total_prestamo_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Taller'){
+                    $taller_martes = 'true';
+                    $total_taller_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Descompostura'){
+                    $descompostura_martes = 'true';
+                    $total_descompostura_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Corralon'){
+                    $corralon_martes = 'true';
+                    $total_corralon_martes = $estatusMartes->total;
+
+                }
+                if($estatusMartes->nb_estatus == 'Baja'){
+                    $baja_martes = 'true';
+                    $total_baja_martes = $estatusMartes->total;
+
+                }
+            }
+
+
+            if($ruta_martes == 'false'){
+                $total_ruta_martes = 0;
+            }
+            if($baja_demanda_martes == 'false'){
+                $total_baja_demanda_martes = 0;
+            }
+            if($prestamo_martes == 'false'){
+                $total_prestamo_martes = 0;
+            }
+            if($taller_martes == 'false'){
+                $total_taller_martes = 0;
+            }
+            if($descompostura_martes == 'false'){
+                $total_descompostura_martes = 0;
+            }
+            if($corralon_martes == 'false'){
+                $total_corralon_martes = 0;
+            }
+            if($baja_martes == 'false'){
+                $total_baja_martes = 0;
+            }
+
+
+            $ruta_miercoles = 'false';
+            $baja_demanda_miercoles = 'false';
+            $prestamo_miercoles = 'false';
+            $taller_miercoles = 'false';
+            $descompostura_miercoles = 'false';
+            $corralon_miercoles = 'false';
+            $baja_miercoles = 'false';
+
+            foreach($estatusUnidadesMiercoles as $estatusMiercoles){
+                if($estatusMiercoles->nb_estatus == 'Ruta'){
+                    $ruta_miercoles = 'true';
+                    $total_ruta_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_miercoles = 'true';
+                    $total_baja_demanda_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Prestamo'){
+                    $prestamo_miercoles = 'true';
+                    $total_prestamo_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Taller'){
+                    $taller_miercoles = 'true';
+                    $total_taller_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Descompostura'){
+                    $descompostura_miercoles = 'true';
+                    $total_descompostura_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Corralon'){
+                    $corralon_miercoles = 'true';
+                    $total_corralon_miercoles = $estatusMiercoles->total;
+
+                }
+                if($estatusMiercoles->nb_estatus == 'Baja'){
+                    $baja_miercoles = 'true';
+                    $total_baja_miercoles = $estatusMiercoles->total;
+
+                }
+            }
+
+
+            if($ruta_miercoles == 'false'){
+                $total_ruta_miercoles = 0;
+            }
+            if($baja_demanda_miercoles == 'false'){
+                $total_baja_demanda_miercoles = 0;
+            }
+            if($prestamo_miercoles == 'false'){
+                $total_prestamo_miercoles = 0;
+            }
+            if($taller_miercoles == 'false'){
+                $total_taller_miercoles = 0;
+            }
+            if($descompostura_miercoles == 'false'){
+                $total_descompostura_miercoles = 0;
+            }
+            if($corralon_miercoles == 'false'){
+                $total_corralon_miercoles = 0;
+            }
+            if($baja_miercoles == 'false'){
+                $total_baja_miercoles = 0;
+            }
+
+            $ruta_jueves = 'false';
+            $baja_demanda_jueves = 'false';
+            $prestamo_jueves = 'false';
+            $taller_jueves = 'false';
+            $descompostura_jueves = 'false';
+            $corralon_jueves = 'false';
+            $baja_jueves = 'false';
+
+            foreach($estatusUnidadesJueves as $estatusJueves){
+                if($estatusJueves->nb_estatus == 'Ruta'){
+                    $ruta_jueves = 'true';
+                    $total_ruta_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_jueves = 'true';
+                    $total_baja_demanda_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Prestamo'){
+                    $prestamo_jueves = 'true';
+                    $total_prestamo_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Taller'){
+                    $taller_jueves = 'true';
+                    $total_taller_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Descompostura'){
+                    $descompostura_jueves = 'true';
+                    $total_descompostura_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Corralon'){
+                    $corralon_jueves = 'true';
+                    $total_corralon_jueves = $estatusJueves->total;
+
+                }
+                if($estatusJueves->nb_estatus == 'Baja'){
+                    $baja_jueves = 'true';
+                    $total_baja_jueves = $estatusJueves->total;
+
+                }
+            }
+
+
+            if($ruta_jueves == 'false'){
+                $total_ruta_jueves = 0;
+            }
+            if($baja_demanda_jueves == 'false'){
+                $total_baja_demanda_jueves = 0;
+            }
+            if($prestamo_jueves == 'false'){
+                $total_prestamo_jueves = 0;
+            }
+            if($taller_jueves == 'false'){
+                $total_taller_jueves = 0;
+            }
+            if($descompostura_jueves == 'false'){
+                $total_descompostura_jueves = 0;
+            }
+            if($corralon_jueves == 'false'){
+                $total_corralon_jueves = 0;
+            }
+            if($baja_jueves == 'false'){
+                $total_baja_jueves = 0;
+            }
+
+            $ruta_viernes = 'false';
+            $baja_demanda_viernes = 'false';
+            $prestamo_viernes = 'false';
+            $taller_viernes = 'false';
+            $descompostura_viernes = 'false';
+            $corralon_viernes = 'false';
+            $baja_viernes = 'false';
+
+            foreach($estatusUnidadesViernes as $estatusViernes){
+                if($estatusViernes->nb_estatus == 'Ruta'){
+                    $ruta_viernes = 'true';
+                    $total_ruta_viernes = $estatusViernes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_viernes = 'true';
+                    $total_baja_demanda_viernes = $estatusViernes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Prestamo'){
+                    $prestamo_viernes = 'true';
+                    $total_prestamo_vienres = $estatusViernes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Taller'){
+                    $taller_viernes = 'true';
+                    $total_taller_viernes = $estatusViernes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Descompostura'){
+                    $descompostura_viernes = 'true';
+                    $total_descompostura_viernes = $estatusLunes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Corralon'){
+                    $corralon_viernes = 'true';
+                    $total_corralon_viernes = $estatusViernes->total;
+
+                }
+                if($estatusViernes->nb_estatus == 'Baja'){
+                    $baja_viernes = 'true';
+                    $total_baja_viernes = $estatusViernes->total;
+
+                }
+            }
+
+
+            if($ruta_viernes == 'false'){
+                $total_ruta_viernes = 0;
+            }
+            if($baja_demanda_viernes == 'false'){
+                $total_baja_demanda_viernes = 0;
+            }
+            if($prestamo_viernes == 'false'){
+                $total_prestamo_viernes = 0;
+            }
+            if($taller_viernes == 'false'){
+                $total_taller_viernes = 0;
+            }
+            if($descompostura_viernes == 'false'){
+                $total_descompostura_viernes = 0;
+            }
+            if($corralon_viernes == 'false'){
+                $total_corralon_viernes = 0;
+            }
+            if($baja_viernes == 'false'){
+                $total_baja_viernes = 0;
+            }
+
+            $ruta_sabado = 'false';
+            $baja_demanda_sabado = 'false';
+            $prestamo_sabado = 'false';
+            $taller_sabado = 'false';
+            $descompostura_sabado = 'false';
+            $corralon_sabado = 'false';
+            $baja_sabado = 'false';
+
+            foreach($estatusUnidadesSabado as $estatusSabado){
+                if($estatusSabado->nb_estatus == 'Ruta'){
+                    $ruta_sabado = 'true';
+                    $total_ruta_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_sabado = 'true';
+                    $total_baja_demanda_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Prestamo'){
+                    $prestamo_sabado = 'true';
+                    $total_prestamo_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Taller'){
+                    $taller_sabado = 'true';
+                    $total_taller_lunes = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Descompostura'){
+                    $descompostura = 'true';
+                    $total_descompostura_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Corralon'){
+                    $corralon_sabado = 'true';
+                    $total_corralon_sabado = $estatusSabado->total;
+
+                }
+                if($estatusSabado->nb_estatus == 'Baja'){
+                    $baja_sabado = 'true';
+                    $total_baja_sabado = $estatusSabado->total;
+
+                }
+            }
+
+
+            if($ruta_sabado == 'false'){
+                $total_ruta_sabado = 0;
+            }
+            if($baja_demanda_sabado == 'false'){
+                $total_baja_demanda_sabado = 0;
+            }
+            if($prestamo_sabado == 'false'){
+                $total_prestamo_sabado = 0;
+            }
+            if($taller_sabado == 'false'){
+                $total_taller_sabado = 0;
+            }
+            if($descompostura_sabado == 'false'){
+                $total_descompostura_sabado = 0;
+            }
+            if($corralon_sabado == 'false'){
+                $total_corralon_sabado = 0;
+            }
+            if($baja_sabado == 'false'){
+                $total_baja_sabado = 0;
+            }
+
+            $ruta_domingo = 'false';
+            $baja_demanda_domingo = 'false';
+            $prestamo_domingo = 'false';
+            $taller_domingo = 'false';
+            $descompostura_domingo = 'false';
+            $corralon_domingo = 'false';
+            $baja_domingo = 'false';
+
+            foreach($estatusUnidadesDomingo as $estatusDomingo){
+                if($estatusDomingo->nb_estatus == 'Ruta'){
+                    $ruta_domingo = 'true';
+                    $total_ruta_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Baja demanda'){
+                    $baja_demanda_domingo = 'true';
+                    $total_baja_demanda_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Prestamo'){
+                    $prestamo_domingo = 'true';
+                    $total_prestamo_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Taller'){
+                    $taller_domingo = 'true';
+                    $total_taller_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Descompostura'){
+                    $descompostura_domingo = 'true';
+                    $total_descompostura_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Corralon'){
+                    $corralon_domingo = 'true';
+                    $total_corralon_domingo = $estatusDomingo->total;
+
+                }
+                if($estatusDomingo->nb_estatus == 'Baja'){
+                    $baja_domingo = 'true';
+                    $total_baja_domingo = $estatusDomingo->total;
+
+                }
+            }
+
+
+            if($ruta_domingo == 'false'){
+                $total_ruta_domingo = 0;
+            }
+            if($baja_demanda_domingo == 'false'){
+                $total_baja_demanda_domingo = 0;
+            }
+            if($prestamo_domingo == 'false'){
+                $total_prestamo_domingo = 0;
+            }
+            if($taller_domingo == 'false'){
+                $total_taller_domingo = 0;
+            }
+            if($descompostura_domingo == 'false'){
+                $total_descompostura_domingo = 0;
+            }
+            if($corralon_domingo == 'false'){
+                $total_corralon_domingo = 0;
+            }
+            if($baja_domingo == 'false'){
+                $total_baja_domingo = 0;
+            }
+
+            //echo $lunesDMY;
+            return view('reportes/utilizacionFlota', compact(
+                                                            'coloresEstatus'
+                                                            ,'fechaDMY'
+                                                            ,'domingo'
+                                                            ,'lunesDMY'
+                                                            ,'total_ruta_lunes'
+                                                            ,'total_baja_demanda_lunes'
+                                                            ,'total_prestamo_lunes'
+                                                            ,'total_taller_lunes'
+                                                            ,'total_descompostura_lunes'
+                                                            ,'total_corralon_lunes'
+                                                            ,'total_baja_lunes'
+                                                            ,'martesDMY'
+                                                            ,'total_ruta_martes'
+                                                            ,'total_baja_demanda_martes'
+                                                            ,'total_prestamo_martes'
+                                                            ,'total_taller_martes'
+                                                            ,'total_descompostura_martes'
+                                                            ,'total_corralon_martes'
+                                                            ,'total_baja_martes'
+                                                            ,'miercolesDMY'
+                                                            ,'total_ruta_miercoles'
+                                                            ,'total_baja_demanda_miercoles'
+                                                            ,'total_prestamo_miercoles'
+                                                            ,'total_taller_miercoles'
+                                                            ,'total_descompostura_miercoles'
+                                                            ,'total_corralon_miercoles'
+                                                            ,'total_baja_miercoles'
+                                                            ,'juevesDMY'
+                                                            ,'total_ruta_jueves'
+                                                            ,'total_baja_demanda_jueves'
+                                                            ,'total_prestamo_jueves'
+                                                            ,'total_taller_jueves'
+                                                            ,'total_descompostura_jueves'
+                                                            ,'total_corralon_jueves'
+                                                            ,'total_baja_jueves'
+                                                            ,'viernesDMY'
+                                                            ,'total_ruta_viernes'
+                                                            ,'total_baja_demanda_viernes'
+                                                            ,'total_prestamo_viernes'
+                                                            ,'total_taller_viernes'
+                                                            ,'total_descompostura_viernes'
+                                                            ,'total_corralon_viernes'
+                                                            ,'total_baja_viernes'
+                                                            ,'sabadoDMY'
+                                                            ,'total_ruta_sabado'
+                                                            ,'total_baja_demanda_sabado'
+                                                            ,'total_prestamo_sabado'
+                                                            ,'total_taller_sabado'
+                                                            ,'total_descompostura_sabado'
+                                                            ,'total_corralon_sabado'
+                                                            ,'total_baja_sabado'
+                                                            ,'domingoDMY'
+                                                            ,'total_ruta_domingo'
+                                                            ,'total_baja_demanda_domingo'
+                                                            ,'total_prestamo_domingo'
+                                                            ,'total_taller_domingo'
+                                                            ,'total_descompostura_domingo'
+                                                            ,'total_corralon_domingo'
+                                                            ,'total_baja_domingo'
+                                                        ));
         }
 
 
@@ -2297,6 +3038,18 @@ class reportesController extends Controller
         $id_estatus = 1;
 
         
+        //consultar estatus actual de las unidades que no estan en ruta
+        /*$otrasUnidades = DB::table('estatus_unidades')
+            ->join('detalle_est_unid_chof_rut_unids', 'estatus_unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades')
+            ->join('unidades', 'detalle_est_unid_chof_rut_unids.id_unidad', '=', 'unidades.id')
+            ->join('detalle_cedis_unidades', 'unidades.id', '=', 'detalle_cedis_unidades.id_unidad')
+            ->select('detalle_est_unid_chof_rut_unids.id','detalle_est_unid_chof_rut_unids.fecha_ruta','unidades.nb_unidad', 'estatus_unidades.nb_estatus')
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', '=', $fecha)
+            ->where('detalle_cedis_unidades.id_cedis', '=', $id_cedis)
+            ->where('unidades.id_operacion', '=', $id_operacion)
+            ->where('estatus_unidades.id', '!=', $id_estatus)
+            ->orderBy('fecha_ruta', 'DESC')
+            ->distinct('id_unidad')->get();*/
 
         $otrasUnidades = DB::table('estatus_unidades')
             ->join('detalle_est_unid_chof_rut_unids', 'estatus_unidades.id', '=', 'detalle_est_unid_chof_rut_unids.id_estatus_unidades')
@@ -2310,7 +3063,11 @@ class reportesController extends Controller
             ->get();
 
 
-        //echo $otrasUnidades;
+        //consultar fecha y estatus de la ultima vez que la unidad tuvo un estatus diferente al actual
+        /*foreach($otrasUnidades as $otras){
+            echo $otras->nb_unidad;
+        
+        }*/
         return view('reportes/otrasUnidades', compact('otrasUnidades'));
 
 

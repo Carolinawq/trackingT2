@@ -176,6 +176,147 @@
     ]);
       @endisset
 
+      @isset($sabado)
+      ['{{$lunesDMY}}'
+      ,{{$total_ruta_lunes}},@if($total_ruta_lunes == 0) '' @else'{{$total_ruta_lunes}}' @endif
+      ,{{$total_baja_demanda_lunes}},@if($total_baja_demanda_lunes == 0) '' @else'{{$total_baja_demanda_lunes}}' @endif
+      ,{{$total_prestamo_lunes}},@if($total_prestamo_lunes == 0) '' @else'{{$total_prestamo_lunes}}' @endif
+      ,{{$total_descompostura_lunes}},@if($total_descompostura_lunes == 0) '' @else'{{$total_descompostura_lunes}}' @endif
+      ,{{$total_taller_lunes}}, @if($total_taller_lunes == 0) '' @else'{{$total_taller_lunes}}' @endif
+      ,{{$total_corralon_lunes}}, @if($total_corralon_lunes == 0) '' @else'{{$total_corralon_lunes}}' @endif
+      ,{{$total_baja_lunes}}, @if($total_baja_lunes == 0) '' @else'{{$total_baja_lunes}}' @endif
+      ,
+      ],
+      
+      ['{{$martesDMY}}'
+      ,{{$total_ruta_martes}},@if($total_ruta_martes == 0) '' @else'{{$total_ruta_martes}}' @endif
+      ,{{$total_baja_demanda_martes}},@if($total_baja_demanda_martes == 0) '' @else'{{$total_baja_demanda_martes}}' @endif
+      ,{{$total_prestamo_martes}},@if($total_prestamo_martes == 0) '' @else'{{$total_prestamo_martes}}' @endif
+      ,{{$total_descompostura_martes}},@if($total_descompostura_martes == 0) '' @else'{{$total_descompostura_martes}}' @endif
+      ,{{$total_taller_martes}}, @if($total_taller_martes == 0) '' @else'{{$total_taller_martes}}' @endif
+      ,{{$total_corralon_martes}}, @if($total_corralon_martes == 0) '' @else'{{$total_corralon_martes}}' @endif
+      ,{{$total_baja_martes}}, @if($total_baja_martes == 0) '' @else'{{$total_baja_martes}}' @endif
+      ,
+      ],
+      ['{{$miercolesDMY}}'
+      ,{{$total_ruta_miercoles}},@if($total_ruta_miercoles == 0) '' @else'{{$total_ruta_miercoles}}' @endif
+      ,{{$total_baja_demanda_miercoles}},@if($total_baja_demanda_miercoles == 0) '' @else'{{$total_baja_demanda_miercoles}}' @endif
+      ,{{$total_prestamo_miercoles}},@if($total_prestamo_miercoles == 0) '' @else'{{$total_prestamo_miercoles}}' @endif
+      ,{{$total_descompostura_miercoles}},@if($total_descompostura_miercoles == 0) '' @else'{{$total_descompostura_miercoles}}' @endif
+      ,{{$total_taller_miercoles}}, @if($total_taller_miercoles == 0) '' @else'{{$total_taller_miercoles}}' @endif
+      ,{{$total_corralon_miercoles}}, @if($total_corralon_miercoles == 0) '' @else'{{$total_corralon_miercoles}}' @endif
+      ,{{$total_baja_miercoles}}, @if($total_baja_miercoles == 0) '' @else'{{$total_baja_miercoles}}' @endif
+      ,
+      ],
+      ['{{$juevesDMY}}'
+      ,{{$total_ruta_jueves}},@if($total_ruta_jueves == 0) '' @else'{{$total_ruta_jueves}}' @endif
+      ,{{$total_baja_demanda_jueves}},@if($total_baja_demanda_jueves == 0) '' @else'{{$total_baja_demanda_jueves}}' @endif
+      ,{{$total_prestamo_jueves}},@if($total_prestamo_jueves == 0) '' @else'{{$total_prestamo_jueves}}' @endif
+      ,{{$total_descompostura_jueves}},@if($total_descompostura_jueves == 0) '' @else'{{$total_descompostura_jueves}}' @endif
+      ,{{$total_taller_jueves}}, @if($total_taller_jueves == 0) '' @else'{{$total_taller_jueves}}' @endif
+      ,{{$total_corralon_jueves}}, @if($total_corralon_jueves == 0) '' @else'{{$total_corralon_jueves}}' @endif
+      ,{{$total_baja_jueves}}, @if($total_baja_jueves == 0) '' @else'{{$total_baja_jueves}}' @endif
+      ,
+      ],
+      ['{{$viernesDMY}}'
+      ,{{$total_ruta_viernes}},@if($total_ruta_viernes == 0) '' @else'{{$total_ruta_viernes}}' @endif
+      ,{{$total_baja_demanda_viernes}},@if($total_baja_demanda_viernes == 0) '' @else'{{$total_baja_demanda_viernes}}' @endif
+      ,{{$total_prestamo_viernes}},@if($total_prestamo_viernes == 0) '' @else'{{$total_prestamo_viernes}}' @endif
+      ,{{$total_descompostura_viernes}},@if($total_descompostura_viernes == 0) '' @else'{{$total_descompostura_viernes}}' @endif
+      ,{{$total_taller_viernes}}, @if($total_taller_viernes == 0) '' @else'{{$total_taller_viernes}}' @endif
+      ,{{$total_corralon_viernes}}, @if($total_corralon_viernes == 0) '' @else'{{$total_corralon_viernes}}' @endif
+      ,{{$total_baja_viernes}}, @if($total_baja_viernes == 0) '' @else'{{$total_baja_viernes}}' @endif
+      ,
+      ],
+      ['{{$sabadoDMY}}'
+      ,{{$total_ruta_sabado}},@if($total_ruta_sabado == 0) '' @else'{{$total_ruta_sabado}}' @endif
+      ,{{$total_baja_demanda_sabado}},@if($total_baja_demanda_sabado == 0) '' @else'{{$total_baja_demanda_sabado}}' @endif
+      ,{{$total_prestamo_sabado}},@if($total_prestamo_sabado == 0) '' @else'{{$total_prestamo_sabado}}' @endif
+      ,{{$total_descompostura_sabado}},@if($total_descompostura_sabado == 0) '' @else'{{$total_descompostura_sabado}}' @endif
+      ,{{$total_taller_sabado}}, @if($total_taller_sabado == 0) '' @else'{{$total_taller_sabado}}' @endif
+      ,{{$total_corralon_sabado}}, @if($total_corralon_sabado == 0) '' @else'{{$total_corralon_sabado}}' @endif
+      ,{{$total_baja_sabado}}, @if($total_baja_sabado == 0) '' @else'{{$total_baja_sabado}}' @endif
+      ,
+      ],
+    ]);
+      @endisset
+
+
+      @isset($domingo)
+      ['{{$lunesDMY}}'
+      ,{{$total_ruta_lunes}},@if($total_ruta_lunes == 0) '' @else'{{$total_ruta_lunes}}' @endif
+      ,{{$total_baja_demanda_lunes}},@if($total_baja_demanda_lunes == 0) '' @else'{{$total_baja_demanda_lunes}}' @endif
+      ,{{$total_prestamo_lunes}},@if($total_prestamo_lunes == 0) '' @else'{{$total_prestamo_lunes}}' @endif
+      ,{{$total_descompostura_lunes}},@if($total_descompostura_lunes == 0) '' @else'{{$total_descompostura_lunes}}' @endif
+      ,{{$total_taller_lunes}}, @if($total_taller_lunes == 0) '' @else'{{$total_taller_lunes}}' @endif
+      ,{{$total_corralon_lunes}}, @if($total_corralon_lunes == 0) '' @else'{{$total_corralon_lunes}}' @endif
+      ,{{$total_baja_lunes}}, @if($total_baja_lunes == 0) '' @else'{{$total_baja_lunes}}' @endif
+      ,
+      ],
+      
+      ['{{$martesDMY}}'
+      ,{{$total_ruta_martes}},@if($total_ruta_martes == 0) '' @else'{{$total_ruta_martes}}' @endif
+      ,{{$total_baja_demanda_martes}},@if($total_baja_demanda_martes == 0) '' @else'{{$total_baja_demanda_martes}}' @endif
+      ,{{$total_prestamo_martes}},@if($total_prestamo_martes == 0) '' @else'{{$total_prestamo_martes}}' @endif
+      ,{{$total_descompostura_martes}},@if($total_descompostura_martes == 0) '' @else'{{$total_descompostura_martes}}' @endif
+      ,{{$total_taller_martes}}, @if($total_taller_martes == 0) '' @else'{{$total_taller_martes}}' @endif
+      ,{{$total_corralon_martes}}, @if($total_corralon_martes == 0) '' @else'{{$total_corralon_martes}}' @endif
+      ,{{$total_baja_martes}}, @if($total_baja_martes == 0) '' @else'{{$total_baja_martes}}' @endif
+      ,
+      ],
+      ['{{$miercolesDMY}}'
+      ,{{$total_ruta_miercoles}},@if($total_ruta_miercoles == 0) '' @else'{{$total_ruta_miercoles}}' @endif
+      ,{{$total_baja_demanda_miercoles}},@if($total_baja_demanda_miercoles == 0) '' @else'{{$total_baja_demanda_miercoles}}' @endif
+      ,{{$total_prestamo_miercoles}},@if($total_prestamo_miercoles == 0) '' @else'{{$total_prestamo_miercoles}}' @endif
+      ,{{$total_descompostura_miercoles}},@if($total_descompostura_miercoles == 0) '' @else'{{$total_descompostura_miercoles}}' @endif
+      ,{{$total_taller_miercoles}}, @if($total_taller_miercoles == 0) '' @else'{{$total_taller_miercoles}}' @endif
+      ,{{$total_corralon_miercoles}}, @if($total_corralon_miercoles == 0) '' @else'{{$total_corralon_miercoles}}' @endif
+      ,{{$total_baja_miercoles}}, @if($total_baja_miercoles == 0) '' @else'{{$total_baja_miercoles}}' @endif
+      ,
+      ],
+      ['{{$juevesDMY}}'
+      ,{{$total_ruta_jueves}},@if($total_ruta_jueves == 0) '' @else'{{$total_ruta_jueves}}' @endif
+      ,{{$total_baja_demanda_jueves}},@if($total_baja_demanda_jueves == 0) '' @else'{{$total_baja_demanda_jueves}}' @endif
+      ,{{$total_prestamo_jueves}},@if($total_prestamo_jueves == 0) '' @else'{{$total_prestamo_jueves}}' @endif
+      ,{{$total_descompostura_jueves}},@if($total_descompostura_jueves == 0) '' @else'{{$total_descompostura_jueves}}' @endif
+      ,{{$total_taller_jueves}}, @if($total_taller_jueves == 0) '' @else'{{$total_taller_jueves}}' @endif
+      ,{{$total_corralon_jueves}}, @if($total_corralon_jueves == 0) '' @else'{{$total_corralon_jueves}}' @endif
+      ,{{$total_baja_jueves}}, @if($total_baja_jueves == 0) '' @else'{{$total_baja_jueves}}' @endif
+      ,
+      ],
+      ['{{$viernesDMY}}'
+      ,{{$total_ruta_viernes}},@if($total_ruta_viernes == 0) '' @else'{{$total_ruta_viernes}}' @endif
+      ,{{$total_baja_demanda_viernes}},@if($total_baja_demanda_viernes == 0) '' @else'{{$total_baja_demanda_viernes}}' @endif
+      ,{{$total_prestamo_viernes}},@if($total_prestamo_viernes == 0) '' @else'{{$total_prestamo_viernes}}' @endif
+      ,{{$total_descompostura_viernes}},@if($total_descompostura_viernes == 0) '' @else'{{$total_descompostura_viernes}}' @endif
+      ,{{$total_taller_viernes}}, @if($total_taller_viernes == 0) '' @else'{{$total_taller_viernes}}' @endif
+      ,{{$total_corralon_viernes}}, @if($total_corralon_viernes == 0) '' @else'{{$total_corralon_viernes}}' @endif
+      ,{{$total_baja_viernes}}, @if($total_baja_viernes == 0) '' @else'{{$total_baja_viernes}}' @endif
+      ,
+      ],
+      ['{{$sabadoDMY}}'
+      ,{{$total_ruta_sabado}},@if($total_ruta_sabado == 0) '' @else'{{$total_ruta_sabado}}' @endif
+      ,{{$total_baja_demanda_sabado}},@if($total_baja_demanda_sabado == 0) '' @else'{{$total_baja_demanda_sabado}}' @endif
+      ,{{$total_prestamo_sabado}},@if($total_prestamo_sabado == 0) '' @else'{{$total_prestamo_sabado}}' @endif
+      ,{{$total_descompostura_sabado}},@if($total_descompostura_sabado == 0) '' @else'{{$total_descompostura_sabado}}' @endif
+      ,{{$total_taller_sabado}}, @if($total_taller_sabado == 0) '' @else'{{$total_taller_sabado}}' @endif
+      ,{{$total_corralon_sabado}}, @if($total_corralon_sabado == 0) '' @else'{{$total_corralon_sabado}}' @endif
+      ,{{$total_baja_sabado}}, @if($total_baja_sabado == 0) '' @else'{{$total_baja_sabado}}' @endif
+      ,
+      ],
+      ['{{$domingoDMY}}'
+      ,{{$total_ruta_domingo}},@if($total_ruta_domingo == 0) '' @else'{{$total_ruta_domingo}}' @endif
+      ,{{$total_baja_demanda_domingo}},@if($total_baja_demanda_domingo == 0) '' @else'{{$total_baja_demanda_domingo}}' @endif
+      ,{{$total_prestamo_domingo}},@if($total_prestamo_domingo == 0) '' @else'{{$total_prestamo_domingo}}' @endif
+      ,{{$total_descompostura_domingo}},@if($total_descompostura_domingo == 0) '' @else'{{$total_descompostura_domingo}}' @endif
+      ,{{$total_taller_domingo}}, @if($total_taller_domingo == 0) '' @else'{{$total_taller_domingo}}' @endif
+      ,{{$total_corralon_domingo}}, @if($total_corralon_domingo == 0) '' @else'{{$total_corralon_domingo}}' @endif
+      ,{{$total_baja_domingo}}, @if($total_baja_domingo == 0) '' @else'{{$total_baja_domingo}}' @endif
+      ,
+      ],
+    ]);
+      @endisset
+
 
     var view = new google.visualization.DataView(data);
     
