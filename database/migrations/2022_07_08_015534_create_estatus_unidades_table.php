@@ -16,6 +16,7 @@ class CreateEstatusUnidadesTable extends Migration
         Schema::create('estatus_unidades', function (Blueprint $table) {
             $table->id();
             $table->string('nb_estatus');
+            $table->string('nb_color');
             $table->boolean('isActive');
             $table->timestamps();
         });
