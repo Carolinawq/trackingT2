@@ -9,7 +9,7 @@ class EstatusUnidade extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nb_estatus", "isActive"];
+    protected $fillable = ["nb_estatus",'nb_color', "isActive"];
 
     public function estatus_unidades(){
         return $this->belongsTo(EstatusUnidade::class);
