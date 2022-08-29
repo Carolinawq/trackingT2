@@ -275,11 +275,29 @@ class AsignacionesController extends Controller
             ->select('detalle_est_unid_chof_rut_unids.no_vuelta')
             ->get();
 
+
+        //restar 1 día a la fecha actual
+        //$diaAnterior = date("d-m-Y",strtotime($fecha_ruta."- 1 days")); 
+
         //consultar el no. de vuelta
         foreach($consultar_no_vuelta as $vuelta){
             $no_vuelta = $vuelta->no_vuelta;
            
         }
+
+
+        $consultar_no_dias_consecutivos = DB::table('detalle_est_unid_chof_rut_unids')
+            ->where('detalle_est_unid_chof_rut_unids.id_unidad', "=", $id_unidad)
+            ->where('detalle_est_unid_chof_rut_unids.id_estatus_unidades', "=", $id_estatus)
+            ->where('detalle_est_unid_chof_rut_unids.fecha_ruta', "=", $fecha_ruta)
+            ->select('detalle_est_unid_chof_rut_unids.no_dias_consecutivos')
+            ->get();
+
+        //consultar el no. de dias consecutivos
+        /*foreach($consultar_no_dias_consecutivos as $dias_consecutivos){
+            $no_vuelta = $vuelta->no_vuelta;
+           
+        }*/
 
         //si el resultado es diferente de vacion aumentar una vuelta + 1, si no agregar la primer vuelta
         if (!empty($no_vuelta)){

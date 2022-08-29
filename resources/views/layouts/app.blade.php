@@ -16,154 +16,125 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- css local tailwind 1.0 -->
-    <link href="{{ asset('css/tailwind.min.css') }}" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <!--<link href="{{ asset('css/tailwind.min.css') }}" rel="stylesheet">-->
     <script src="{{ asset('js/alpine.min.js') }}" defer></script>
+    <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
+
 
 
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     <div id="app">
-        <header class="bg-blue-900 py-6">
-            <div class="container mx-auto flex justify-between items-center px-6">
-                <div>
-                    <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                {{-- se agrego esta opcion de navegacion --}}
-                    @auth
-                <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                    <div class="text-sm lg:flex-grow ml-3">
-                        <!--
-                        <a href="{{ route("operaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Operaciones")}}
-                        </a>
-                        
-                        <a href="{{ route("cedis.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Cedis")}}
-                        </a>
-
-                        <a href="{{ route("detalleCedisOperaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Asignar operaciones a cedis")}}
-                        </a>
-
-                        <a href="{{ route("choferes.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Choferes")}}
-                        </a>
-
-                        <a href="{{ route("asignaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Asignaciones")}}
-                        </a>
-
-                        <a href="{{ route("estatusUnidades.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Estatus Unidades")}}
-                        </a>
-
-                        <a href="{{ route("rutas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Rutas")}}
-                        </a>
-
-                        <a href="{{ route("paradas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Paradas")}}
-                        </a>
-
-                        <a href="{{ route("motivoParadas.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Motivo paradas")}}
-                        </a>
-
-                        <a href="{{ route("eventos.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Eventos")}}
-                        </a>
-
-                        <a href="{{ route("justificaciones.index") }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                            {{__("Justificaciones")}}
-                        </a>-->
-
-                        
-                        </div>
-                            <div class="hidden md:block">
-                                <div class="ml-10 flex items-baseline space-x-4">
-                                    <div x-data="{ dropdownOpen: false }" class="relative">
-                                        <button @click="dropdownOpen = !dropdownOpen" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                        Asignaciones
-                                        </button>
-                                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
-                                            <a href="{{ route('asignaciones', ['id_operacion' => 1]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Vivo') }}</a>
-                                            <a href="{{ route('asignaciones', ['id_operacion' => 2]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Procesado') }}</a>
-                                        </div>
-                                    </div>
-                                    <a href="{{ route('tratarParadas') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                                    {{__("Paradas")}}
-                                    </a>
-                                    <a href="{{ route('tratarEventos') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                                    {{__("Eventos")}}
-                                    </a>
-                                    <a href="{{ route('subirVelocidades') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" >
-                                    {{__("Velocidades")}}
-                                    </a>
-                                    <div x-data="{ dropdownOpen: false }" class="relative">
-                                        <button @click="dropdownOpen = !dropdownOpen" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                        Reportes
-                                        </button>
-                                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
-                                            <a href="{{ route('reportes', ['id_operacion' => 1]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Vivo') }}</a>
-                                            <a href="{{ route('reportes', ['id_operacion' => 2]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200">{{ __('Pollo Procesado') }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                        
-                    </div>
-                </div>
-
-            @endauth
+        
+<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <a href="{{ url('/') }}" class="flex items-center">
+        <img src="{{URL::asset('/images/torre-monitoreo.png')}}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
+        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Tracking T2</span>
+    </a>
+    <div class="flex items-center md:order-2" x-data="{ dropdownOpen: false }">
+        <button @click="dropdownOpen = !dropdownOpen" type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="dropdownOpen" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 rounded-full" src="https://media.istockphoto.com/photos/newborn-chick-picture-id466167557?k=20&m=466167557&s=612x612&w=0&h=7Xds9Xo2uqzus8ganXwpErmEq2YGLIX_79vNABS5lBE=" alt="user photo">
+        </button>
+        <!-- Dropdown menu -->
+        <div x-show="dropdownOpen" class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 block" id="user-dropdown" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(646px, 82px);">
             
-
-                <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
-                    @guest
-                        <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @if (Route::has('register'))
-                            <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        @endif
-                    @else
-                        <span>{{ Auth::user()->name }}</span>
-
-                        <a href="{{ route('logout') }}"
-                           class="no-underline hover:underline"
-                           onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                            {{ csrf_field() }}
-                        </form>
-                    @endguest
-                </nav>
+            @guest
+            <ul class="py-1" aria-labelledby="user-menu-button">
+                <li>
+                    <a href="{{ route('login') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Login</a>
+                </li>
+                @if (Route::has('register'))
+                <li>
+                    <a href="{{ route('register') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Registrar</a>
+                </li>
+                @endif
+            </ul>
+            @else
+            
+            <div class="py-3 px-4">
+                
+                <span class="self-center text-x font-semibold whitespace-nowrap dark:text-white">{{ Auth::user()->name }}</span>
+                <ul class="py-1" aria-labelledby="user-menu-button">
+                <li>
+                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                </li>
+                </ul>
+                <a class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" href="{{ route('logout') }}"
+                        class="no-underline hover:underline"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        {{ csrf_field() }}
+                </form>
             </div>
+            
+            @endguest
 
-        </header>
+        </div>
+        <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+        </button>
     </div>
-
-        @if(session("success"))
-        <div class="bg-green-100 border border-blue-400 text-black-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Supervisor!</strong>
-        <span class="block sm:inline">{{session("success")}}</span>
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-        </span>
+    @auth
+    <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
+        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">{{__("Asignaciones")}} <svg class="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button>
+            <!-- Dropdown menu -->
+        <div id="dropdownNavbar" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                <li>
+                <a href="{{ route('asignaciones', ['id_operacion' => 1]) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__("Pollo Vivo")}}</a>
+                </li>
+                <li>
+                <a href="{{ route('asignaciones', ['id_operacion' => 2]) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__("Pollo Procesado")}}</a>
+                </li>
+            </ul>
         </div>
+            <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+                <a href="{{route('tratarParadas')}}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">{{__("Tratar paradas")}}</a>
+            </li>
+            <li>
+                <a href="{{route('tratarEventos')}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{__("Eventos")}}</a>
+            </li>
+            <li>
+                <a href="{{route('subirVelocidades')}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{__("Velocidades")}}</a>
+            </li>
+            </li>
+            @guest
+            <li>
+                <a href="{{ route('login') }}" class="no-underline hover:underline block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{__("Login")}}</a>
+            </li>
+            <li>
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{__("Registrar")}}</a>
+                @endif
+            </li>
+            @endguest
 
-        @endif
-
-        @if(session("error"))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">{{__("Supervisor!")}}</strong>
-        <span class="block sm:inline">{{session("error")}}</span>
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-        </span>
+            </ul>
+        <button id="dropdownReportesLink" data-dropdown-toggle="dropdownReportesbar" class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">{{__("Reportes")}} <svg class="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button>
+            <!-- Dropdown menu -->
+        <div id="dropdownReportesbar" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                <li>
+                <a href="{{route('reportes', ['id_operacion' => 1])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__("Pollo Vivo")}}</a>
+                </li>
+                <li>
+                <a href="{{route('reportes', ['id_operacion' => 2])}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{__("Pollo Procesado")}}</a>
+                </li>
+            </ul>
         </div>
-        @endif
+    </div>
+  @endauth
+</nav>
 
-        <div class="container mx-auto px-4">
+
+
+    
+    <div class="container mx-auto px-4">
         @yield('content')
-        </div>
+    </div>

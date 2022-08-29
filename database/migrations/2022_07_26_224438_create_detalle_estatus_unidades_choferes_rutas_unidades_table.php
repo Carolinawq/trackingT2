@@ -31,6 +31,7 @@ class CreateDetalleEstatusUnidadesChoferesRutasUnidadesTable extends Migration
             $table->foreign("id_estatus_unidades")->references("id")->on("estatus_unidades");
 
             $table->integer('no_vuelta')->nullable();
+            $table->integer('no_dias_consecutivos')->nullable();
             $table->date('fecha_ruta');
 
 
