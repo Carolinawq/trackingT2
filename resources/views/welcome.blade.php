@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Torre de monitoreo') }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -31,11 +31,18 @@
     <div class="min-h-screen flex items-center justify-center">
         <div class="flex flex-col justify-around h-full">
             <div>
-                <h1 class="mb-6 text-gray-600 text-center font-light tracking-wider text-4xl sm:mb-8 sm:text-6xl">
-                    {{ config('app.name', 'Laravel') }}
-                </h1>
+                <div class="flex justify-center items-center text-3xl">
+                    <img src="{{URL::asset('/images/torre-monitoreo.png')}}" style="height: 400px; ">
+                    
+                </div>
+                <div class="flex justify-center items-center text-3xl">
+                    <br>
+                    <h1 class="mb-6 text-gray-600 text-center font-light tracking-wider text-4xl sm:mb-8 sm:text-6xl" >
+                        {{ config('app.name', 'Torre de monitoreo') }}
+                    </h1>
+                </div>
                 <ul class="flex flex-col space-y-2 sm:flex-row sm:flex-wrap sm:space-x-8 sm:space-y-0">
-                    <li>
+                    <!--<li>
                         <a href="https://laravel.com/docs" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Documentation">Documentation</a>
                     </li>
                     <li>
@@ -58,7 +65,7 @@
                     </li>
                     <li>
                         <a href="https://tailwindcss.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Tailwind Css">Tailwind CSS</a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>

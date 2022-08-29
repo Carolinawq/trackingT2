@@ -21,7 +21,8 @@
             @forelse($paradasPolloVivo as $paradasVivo)
 
             <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            @if($paradasVivo->nb_parada == 'Parada autorizada')
+            <tr class="bg-white text-blue-700 border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="border px-4 py-2">{{ $paradasVivo->id }}</td>
                 <td class="border px-4 py-2">{{ $paradasVivo->nb_cedis }}</td>
                 <td class="border px-4 py-2">{{ $paradasVivo->nb_unidad }}</td>
@@ -49,6 +50,36 @@
 
                 </td>
             </tr>
+            @elseif($paradasVivo->nb_parada == 'Parada no autorizada')
+            <tr class="bg-white text-red-600 border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="border px-4 py-2">{{ $paradasVivo->id }}</td>
+                <td class="border px-4 py-2">{{ $paradasVivo->nb_cedis }}</td>
+                <td class="border px-4 py-2">{{ $paradasVivo->nb_unidad }}</td>
+                <td class="border px-4 py-2">{{ $paradasVivo->nb_motivo_parada }}</td>
+                <td class="border px-4 py-2">{{ $paradasVivo->nb_parada }}</td>
+                <td class="border px-4 py-2 text-blue-600/100">
+                    <p class="text-blue-600/100">
+                        <a href="{{ url($paradasVivo->ubicacion) }}" target="_blank" class="underline">Ver ubicación</a>
+                    </p>
+                </td>
+                <td class="border px-4 py-2">
+                    <a 
+                        href="#"  
+                        class="text-red-400"
+                        onclick="event.preventDefault();
+                            document.getElementById('delete-paradaVivo-{{ $paradasVivo->id }}-form').submit();"
+                        > {{ __("Eliminar") }}
+                    </a>
+
+
+                    <form id="delete-paradaVivo-{{ $paradasVivo->id }}-form" action="{{ route("paradas.destroy", ["parada" => $paradasVivo->id ]) }}" method="POST" class="hidden">
+                        @method("DELETE")
+                        @csrf
+                    </form>
+
+                </td>
+            </tr>
+            @endif
 
                 @empty
 
@@ -78,7 +109,7 @@
 
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="py-3 px-6">{{ __("#") }} </th>
+                        <th scope="col" class="py-3 px-6 ">{{ __("#") }} </th>
                         <th scope="col" class="py-3 px-6">{{ __("Cedi") }} </th>
                         <th scope="col" class="py-3 px-6">{{ __("Unidad") }} </th>
                         <th scope="col" class="py-3 px-6">{{ __("Motivo parada") }} </th>
@@ -90,6 +121,7 @@
             @forelse($paradasPolloProcesado as $paradasProcesado)
 
             <tbody>
+            @if($paradasProcesado->nb_parada == 'Parada autorizada')
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="border px-4 py-2">{{ $paradasProcesado->id }}</td>
                 <td class="border px-4 py-2">{{ $paradasProcesado->nb_cedis }}</td>
@@ -119,6 +151,37 @@
 
                 </td>
             </tr>
+            @elseif($paradasProcesado->nb_parada == 'Parada no autorizada')
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="border px-4 py-2">{{ $paradasProcesado->id }}</td>
+                <td class="border px-4 py-2">{{ $paradasProcesado->nb_cedis }}</td>
+                <td class="border px-4 py-2">{{ $paradasProcesado->nb_unidad }}</td>
+                <td class="border px-4 py-2">{{ $paradasProcesado->nb_motivo_parada }}</td>
+                <td class="border px-4 py-2">{{ $paradasProcesado->nb_parada }}</td>
+                <td class="border px-4 py-2">
+                    <p class="text-blue-600/100">
+                        <a href="{{ url($paradasProcesado->ubicacion) }}" target="_blank" class="underline">Ver ubicación</a>
+                    </p>
+                </td>
+
+                <td class="border px-4 py-2">
+                    <a 
+                        href="#"  
+                        class="text-red-400"
+                        onclick="event.preventDefault();
+                            document.getElementById('delete-paradaProcesado-{{ $paradasProcesado->id }}-form').submit();"
+                        > {{ __("Eliminar") }}
+                    </a>
+
+
+                    <form id="delete-paradaVivo-{{ $paradasProcesado->id }}-form" action="{{ route("paradas.destroy", ["parada" => $paradasProcesado->id ]) }}" method="POST" class="hidden">
+                        @method("DELETE")
+                        @csrf
+                    </form>
+
+                </td>
+            </tr>
+            @endif
 
                 @empty
 
